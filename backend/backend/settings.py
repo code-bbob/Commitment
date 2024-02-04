@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'userauth',
     'rest_framework.authtoken',
+    'commit',
 ]
 
 MIDDLEWARE = [

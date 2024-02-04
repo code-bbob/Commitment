@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
-from .serializers import  UserLoginSerializer, UserRegistrationSerializer, UserPasswordResetSerializer, UserChangePasswordSerializer,SendPasswordResetEmailSerializer
+from .serializers import  UserLoginSerializer, UserRegistrationSerializer, UserPasswordResetSerializer, UserChangePasswordSerializer,SendPasswordResetEmailSerializer, UserInfoSerializer
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
@@ -96,4 +96,10 @@ class UserPasswordResetView(APIView):
     serializer = UserPasswordResetSerializer(data=request.data, context={'uid':uid, 'token':token})
     serializer.is_valid(raise_exception=True)
     return Response({'msg':'Password Reset Successfully'}, status=status.HTTP_200_OK)
-  
+
+class UserInfoView(APIView):
+  permission_classes = [IsAuthenticated]
+  def get(self,request,format=None):
+    user=request.user
+    serializer=UserInfoSerializer(user)
+    return Response(serializer.data, status=status.HTTP_200_OK)
