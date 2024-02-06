@@ -6,5 +6,6 @@ from django.utils import timezone
 
 class Commit(models.Model):
     user = models.ForeignKey(User, related_name='commit', on_delete=models.CASCADE)
-    commit = models.BooleanField(default=False)
+    title = models.CharField(max_length=100)
+    content = models.TextField()
     date = models.DateField(default=timezone.now)
