@@ -9,3 +9,7 @@ class Commit(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
     date = models.DateField(default=timezone.now)
+
+class Group(models.Model):
+    name= models.CharField(max_length=30)
+    user = models.ManyToManyField(User)
