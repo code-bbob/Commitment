@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Commit
+from .models import Commit, Group
 from userauth.serializers import UserInfoSerializer
 
 class CommitSerializer(serializers.ModelSerializer):
@@ -12,4 +12,6 @@ class CommitSerializer(serializers.ModelSerializer):
 
 
 class GroupSerializer(serializers.ModelSerializer):
-    pass
+    class Meta:
+        model = Group
+        fields = '__all__'

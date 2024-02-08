@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework import generics
 from rest_framework.views import APIView
-from .serializers import CommitSerializer
-from .models import Commit
+from .serializers import CommitSerializer, GroupSerializer
+from .models import Commit, Group
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
@@ -43,3 +43,23 @@ class CommitView(APIView):
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=user)
             return Response({"msg":"successful"},status=status.HTTP_200_OK)
+        
+class GroupView(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self,request):
+        user = request.user
+        queryset = Group.objects.filter(user=user)
+        if queryset:
+            group_data=[]
+            for group in queryset:
+                if group:
+                    userstreaks=[]
+                    for user in group.user.all():
+                        streakset = Commit.objects.filter(user=user).order_by('date').values('date').distinct()
+                        userstreaks.append(calculate_streak(streakset))
+                    streak = min(userstreaks)
+                    serializer = GroupSerializer(group)
+                    group_data.append({'data': serializer.data, 'streak': streak})
+            return Response(group_data)
+        else:
+            return Response({'error': "No matching group found for the user"}, status=status.HTTP_404_NOT_FOUND)
