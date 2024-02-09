@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework import generics
 from rest_framework.views import APIView
 from .serializers import CommitSerializer, GroupSerializer
+from userauth.serializers import UserInfoSerializer
 from .models import Commit, Group
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -39,10 +40,13 @@ class CommitView(APIView):
     def post(self,request):
         data=request.data
         user=request.user
+        # data["user"]= request.user
         serializer = CommitSerializer(data=data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=user)
             return Response({"msg":"successful"},status=status.HTTP_200_OK)
+        
+# class CreateGroupView(APIView)
         
 class GroupView(APIView):
     permission_classes = [IsAuthenticated]
@@ -63,3 +67,20 @@ class GroupView(APIView):
             return Response(group_data)
         else:
             return Response({'error': "No matching group found for the user"}, status=status.HTTP_404_NOT_FOUND)
+        
+    def post(self,request):
+        action = request.data.get('action')
+        if action == "create":
+            return self.create_group(request)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+    
+    def create_group(self,request):
+        data=request.data
+        user=request.user
+        data.pop('action',None)
+        serializer=GroupSerializer(data=data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(user=[user])#we need to send a list here because models has manytomany field so it is gonna expect a list
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
