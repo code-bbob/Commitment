@@ -43,7 +43,7 @@ class CommitView(APIView):
         # data["user"]= request.user
         serializer = CommitSerializer(data=data)
         if serializer.is_valid(raise_exception=True):
-            serializer.save(user=user)
+            serializer.save(user=user)#yo garena vane not null fail hunxa cause u need to provide user to model in order to save a new 
             return Response({"msg":"successful"},status=status.HTTP_200_OK)
         
 # class CreateGroupView(APIView)
@@ -59,7 +59,7 @@ class GroupView(APIView):
                 if group:
                     userstreaks=[]
                     for user in group.user.all():
-                        streakset = Commit.objects.filter(user=user).order_by('date').values('date').distinct()
+                        streakset = Commit.objects.filter(user=user,type="Group").order_by('date').values('date').distinct()
                         userstreaks.append(calculate_streak(streakset))
                     streak = min(userstreaks)
                     serializer = GroupSerializer(group)
@@ -72,6 +72,8 @@ class GroupView(APIView):
         action = request.data.get('action')
         if action == "create":
             return self.create_group(request)
+        elif action == "join":
+            return self.join_group(request)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
     
@@ -82,5 +84,18 @@ class GroupView(APIView):
         serializer=GroupSerializer(data=data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=[user])#we need to send a list here because models has manytomany field so it is gonna expect a list
+            print("Group created")
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+    def join_group(self,request):
+        data = request.data
+        user = request.user
+        data.pop('action',None)
+        join_code = data.pop('join_code',None)
+        group=Group.objects.get(join_code=join_code)
+        print(group.user.all())
+        if user in group.user.all():
+            return Response({'msg':"User already exists ini group"},status=status.HTTP_400_BAD_REQUEST)
+        else:
+            group.user.add(user)
+        return Response({'msg':"User added succesfully"},status=status.HTTP_200_OK)

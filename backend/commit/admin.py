@@ -3,5 +3,8 @@ from .models import Commit,Group
 
 # Register your models here.
 
-admin.site.register(Commit)
+class CommitAdmin(admin.ModelAdmin):
+    ordering = ['-date']
+
+admin.site.register(Commit,CommitAdmin)
 admin.site.register(Group)
