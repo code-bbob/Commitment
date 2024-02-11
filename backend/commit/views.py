@@ -43,8 +43,13 @@ class CommitView(APIView):
         # data["user"]= request.user
         serializer = CommitSerializer(data=data)
         if serializer.is_valid(raise_exception=True):
-            serializer.save(user=user)#yo garena vane not null fail hunxa cause u need to provide user to model in order to save a new 
-            return Response({"msg":"successful"},status=status.HTTP_200_OK)
+            commit_instance = serializer.save(user=user)#yo garena vane not null fail hunxa cause u need to provide user to model in order to save a new 
+            # if data["type"] == "Group":
+            # # Add this commit to all related groups
+            #     groups = Group.objects.filter(user=user)
+            #     for group in groups:
+            #         group.commit.add(commit_instance)#you need to pass an object instance here instead of the serialized data
+            return Response({"msg":serializer.data},status=status.HTTP_200_OK)
         
 # class CreateGroupView(APIView)
         
@@ -83,7 +88,7 @@ class GroupView(APIView):
         data.pop('action',None)
         serializer=GroupSerializer(data=data)
         if serializer.is_valid(raise_exception=True):
-            serializer.save(user=[user])#we need to send a list here because models has manytomany field so it is gonna expect a list
+            serializer.save(user=[user])#we need to send a list here because models has manytomany field so it is gonna expect a list. Also we can just do serializer.save and it is gonna save it without adding any users
             print("Group created")
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
