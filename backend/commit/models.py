@@ -21,22 +21,22 @@ class Commit(models.Model):
     date = models.DateField(default=datetime.date.today)
 
     def __str__(self):
-        return f"{self.user} at {self.date}"
+        return f"{self.title} at {self.date}"
     
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
-        # Check if the commit type is 'group'
-        if self.type == Commit.COMMIT_TYPE_GROUP:
-            # Add this commit to all related groups
-            groups = Group.objects.filter(user=self.user)
-            for group in groups:
-                group.commit.add(self)
+        # # Check if the commit type is 'group'
+        # if self.type == Commit.COMMIT_TYPE_GROUP:
+        #     # Add this commit to all related groups
+        #     groups = Group.objects.filter(user=self.user,)
+        #     for group in groups:
+        #         group.commit.add(self)
 
 class Group(models.Model):
     name= models.CharField(max_length=30)
     user = models.ManyToManyField(User)
-    join_code = models.UUIDField(default=uuid.uuid4)
+    code = models.UUIDField(default=uuid.uuid4)
     commit = models.ManyToManyField(Commit)
     
     def __str__(self):
