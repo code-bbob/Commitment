@@ -55,24 +55,38 @@ class CommitView(APIView):
         
 class GroupView(APIView):
     permission_classes = [IsAuthenticated]
-    def get(self,request):
+    def get(self,request, *args, **kwargs):
         user = request.user
-        queryset = Group.objects.filter(user=user)
-        if queryset:
-            group_data=[]
-            for group in queryset:
-                if group:
-                    userstreaks=[]
-                    for user in group.user.all():
-                        streakset = Commit.objects.filter(user=user,type="Group").order_by('date').values('date').distinct()
-                        userstreaks.append(calculate_streak(streakset))
-                    streak = min(userstreaks)
-                    serializer = GroupSerializer(group)
-                    group_data.append({'data': serializer.data, 'streak': streak})
+        uuid= self.kwargs.get('uuid')
+        if uuid:
+            group = Group.objects.filter(user=user, code = uuid).first()
+            if group:
+                        group_data=[]
+                        userstreaks=[]
+                        for user in group.user.all():
+                            streakset = Commit.objects.filter(user=user,type="Group").order_by('date').values('date').distinct()
+                            userstreaks.append(calculate_streak(streakset))
+                        streak = min(userstreaks)
+                        serializer = GroupSerializer(group)
+                        group_data.append({'data': serializer.data, 'streak': streak})
             return Response(group_data)
         else:
-            return Response({'error': "No matching group found for the user"}, status=status.HTTP_404_NOT_FOUND)
-        
+            queryset = Group.objects.filter(user=user)
+            if queryset:
+                group_data=[]
+                for group in queryset:
+                    if group:
+                        userstreaks=[]
+                        for user in group.user.all():
+                            streakset = Commit.objects.filter(user=user,type="Group").order_by('date').values('date').distinct()
+                            userstreaks.append(calculate_streak(streakset))
+                        streak = min(userstreaks)
+                        serializer = GroupSerializer(group)
+                        group_data.append({'data': serializer.data, 'streak': streak})
+                return Response(group_data)
+            else:
+                return Response({'error': "No matching group found for the user"}, status=status.HTTP_404_NOT_FOUND)
+            
     def post(self,request):
         action = request.data.get('action')
         if action == "create":
@@ -104,3 +118,6 @@ class GroupView(APIView):
         else:
             group.user.add(user)
         return Response({'msg':"User added succesfully"},status=status.HTTP_200_OK)
+    
+# class GroupCommitView(generics.ListAPIView):
+#     serializer_class = 
