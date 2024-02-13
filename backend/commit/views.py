@@ -61,15 +61,17 @@ class GroupView(APIView):
         if uuid:
             group = Group.objects.filter(user=user, code = uuid).first()
             if group:
-                        group_data=[]
-                        userstreaks=[]
-                        for user in group.user.all():
-                            streakset = Commit.objects.filter(user=user,type="Group").order_by('date').values('date').distinct()
-                            userstreaks.append(calculate_streak(streakset))
-                        streak = min(userstreaks)
-                        serializer = GroupSerializer(group)
-                        group_data.append({'data': serializer.data, 'streak': streak})
-            return Response(group_data)
+                group_data=[]
+                userstreaks=[]
+                for user in group.user.all():
+                    streakset = Commit.objects.filter(user=user,type="Group").order_by('date').values('date').distinct()
+                    userstreaks.append(calculate_streak(streakset))
+                streak = min(userstreaks)
+                serializer = GroupSerializer(group)
+                group_data.append({'data': serializer.data, 'streak': streak})
+                return Response(group_data)
+            else:
+                return Response({"msg": "You are not in the group"})
         else:
             queryset = Group.objects.filter(user=user)
             if queryset:
