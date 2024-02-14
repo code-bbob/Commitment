@@ -27,16 +27,30 @@ class CommitView(APIView):
     permission_classes = [IsAuthenticated]
     def get(self, request):
         user = request.user
-        queryset = Commit.objects.filter(user=user).order_by('date')
-        streakset = Commit.objects.filter(user=user).order_by('date').values('date').distinct()
-        serializer = CommitSerializer(queryset, many=True)
-        streak = calculate_streak(streakset)
-        data={
-            'data':serializer.data,
-            'streak':streak
-        }
-        return Response(data)
-    
+        search = self.request.query_params.get("search")
+        if search:
+            queryset = Commit.objects.filter(user=user, title__icontains =search).order_by('date')
+            if not queryset:
+                return Response({"msg":"No commit of the search found"})
+            streakset = Commit.objects.filter(user=user).order_by('date').values('date').distinct()
+            serializer = CommitSerializer(queryset, many=True)
+            streak = calculate_streak(streakset)
+            data={
+                'data':serializer.data,
+                'streak':streak
+            }
+            return Response(data)
+        else:
+            queryset = Commit.objects.filter(user=user).order_by('date')
+            streakset = Commit.objects.filter(user=user).order_by('date').values('date').distinct()
+            serializer = CommitSerializer(queryset, many=True)
+            streak = calculate_streak(streakset)
+            data={
+                'data':serializer.data,
+                'streak':streak
+            }
+            return Response(data)
+        
     def post(self,request):
         data=request.data
         user=request.user
@@ -51,14 +65,12 @@ class CommitView(APIView):
                     group.commit.add(commit_instance)#you need to pass an object instance here instead of the serialized data
             return Response({"msg":serializer.data},status=status.HTTP_200_OK)
         
-# class CreateGroupView(APIView)
-        
 class GroupView(APIView):
     permission_classes = [IsAuthenticated]
     def get(self,request, *args, **kwargs):
         user = request.user
         uuid= self.kwargs.get('uuid')
-        search = self.request.query_params.get('search')
+        search = request.query_params.get('search')
         if uuid:
             group = Group.objects.filter(user=user, code = uuid).first()
             if group:
@@ -88,8 +100,7 @@ class GroupView(APIView):
                         group_data.append({'data': serializer.data, 'streak': streak})
                 return Response(group_data)
             else:
-                return Response({'error': "No matching group found from the search"}, status=status.HTTP_404_NOT_FOUND)
-            
+                return Response({'error': "No matching group found from the search"}, status=status.HTTP_404_NOT_FOUND)  
         else:
             queryset = Group.objects.filter(user=user)
             if queryset:
@@ -139,5 +150,3 @@ class GroupView(APIView):
             group.user.add(user)
         return Response({'msg':"User added succesfully"},status=status.HTTP_200_OK)
     
-# class GroupCommitView(generics.ListAPIView):
-#     serializer_class = 
