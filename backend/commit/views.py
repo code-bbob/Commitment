@@ -149,4 +149,7 @@ class GroupView(APIView):
         else:
             group.user.add(user)
         return Response({'msg':"User added succesfully"},status=status.HTTP_200_OK)
-    
+
+class DummyDataView(APIView):
+    def get(self, request, *args, **kwargs):
+        return Response({'name':"Bibhab"})
