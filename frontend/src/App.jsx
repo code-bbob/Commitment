@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import axios from 'axios'
 import './App.css'
+import ActivityCalendar from 'react-activity-calendar'
+import Heatmap from './Heatmap'
 
 function App() {
   const [commit, setCommit] = useState([])
@@ -21,6 +23,7 @@ function App() {
   return (
     <>
     <h1>Hiiii {commit?.name}</h1>
+    <Heatmap/>
     </>
   )
 }
