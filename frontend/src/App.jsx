@@ -2,16 +2,17 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import axios from 'axios'
 import './App.css'
-import ActivityCalendar from 'react-activity-calendar'
 import Heatmap from './Heatmap'
 
 function App() {
-  const [commit, setCommit] = useState([])
+
+
+  const [name, setName] = useState([])
   useEffect(()=>{
     async function getAllCommit(){
       try {
-        const commit = await axios.get("http://127.0.0.1:8000/api/commit/test")
-        setCommit(commit.data)
+        const name = await axios.get("http://127.0.0.1:8000/api/commit/test")
+        setName(name.data)
       }
       catch (e){
         console.log(e)
@@ -19,10 +20,11 @@ function App() {
     } 
     getAllCommit()
   },[])
+  console.log(name)
 
   return (
     <>
-    <h1>Hiiii {commit?.name}</h1>
+    <h1>Hiiii {name?.name}</h1>
     <Heatmap/>
     </>
   )
