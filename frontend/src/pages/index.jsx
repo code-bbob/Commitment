@@ -3,12 +3,15 @@ import Heatmap from "../components/Heatmap";
 import axios from "axios";
 import { SayHi } from "./sayhi";
 import Navbar from "../components/navbar";
+import Groups from "../components/groups";
 
 export const Index = () => {
-    const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4NjY2MTk4LCJpYXQiOjE3MDg1Nzk3OTgsImp0aSI6IjYzMWVhYjFhYTQ5MzRhZjc4YzQyZmU2ZTcxZjIwMzQ1IiwidXNlcl9pZCI6MX0.Q-dCTsZ0S1VOjfpbxUtRckT5d_VPek_j0BxpB0w79jc";
+    const accessToken = localStorage.getItem('accessToken');
+    const refreshToken = localStorage.getItem('refreshToken');
 
     const [commit, setCommit] = useState([]);
     const [user, setUser] = useState([]);
+    const [groups, setGroups] = useState([]);
 
     useEffect(() => {
         async function getCommit() {
@@ -19,12 +22,29 @@ export const Index = () => {
                     }
                 });
                 setCommit(response.data.data);
+                console.log('commitko',response.data);
             } catch (e) {
-                console.log(e);
+                console.log("error ayooooooo");
             }   
         }
-        getCommit()
+        getCommit();
         
+        async function getGroups() {
+                try {
+                    const response = await axios.get("http://127.0.0.1:8000/api/commit/group/", {
+                        headers: {
+                            Authorization: `Bearer ${accessToken}`
+                        }
+                    });
+                    setGroups(response.data.data);
+                    console.log("group ko",response.data);
+                    console.log("group ko",response.data.data);
+                } catch (e) {
+                    console.log(e);
+                }   
+            }
+        getGroups();
+
         async function getUser() {
             try {
                 const response = await axios.get("http://127.0.0.1:8000/api/userauth/info/", {
@@ -47,6 +67,7 @@ export const Index = () => {
         < Navbar user={user}/>
         <h1 className="text-2xl font-bold text-center my-10">Hi {user.name}</h1>
         <Heatmap data={commit}/>
+        <Groups groups = {groups}/>
         <h1 className="text-2xl font-bold text-center my-10">Bye {user.name}</h1>
         </>
     )
