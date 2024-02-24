@@ -3,7 +3,7 @@ import ActivityCalendar from 'react-activity-calendar';
 import axios from 'axios';
 
 const Heatmap = ({data}) => {
-    console.log("asdasd",data)
+
     return (
         <>
             <ActivityCalendar
