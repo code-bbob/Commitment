@@ -13,6 +13,7 @@ from datetime import timedelta,date
 
 # Create your views here.
 
+
 def calculate_streak(querysets):
     today=date.today()
     current_streak = 0
@@ -22,6 +23,7 @@ def calculate_streak(querysets):
         else:
             break
     return current_streak
+
 
 class CommitView(APIView):
     permission_classes = [IsAuthenticated]
@@ -74,47 +76,22 @@ class GroupView(APIView):
         if uuid:
             group = Group.objects.filter(user=user, code = uuid).first()
             if group:
-                group_data=[]
-                userstreaks=[]
-                for user in group.user.all():
-                    streakset = Commit.objects.filter(user=user,type="Group").order_by('date').values('date').distinct()
-                    userstreaks.append(calculate_streak(streakset))
-                streak = min(userstreaks)
                 serializer = GroupSerializer(group)
-                group_data.append({'data': serializer.data, 'streak': streak})
-                return Response(group_data)
+                return Response(serializer.data)
             else:
                 return Response({"msg": "You are not in the group"})
         elif search:
             queryset = Group.objects.filter(user=user, name__icontains = search)
             if queryset:
-                group_data=[]
-                for group in queryset:
-                    if group:
-                        userstreaks=[]
-                        for user in group.user.all():
-                            streakset = Commit.objects.filter(user=user,type="Group").order_by('date').values('date').distinct()
-                            userstreaks.append(calculate_streak(streakset))
-                        streak = min(userstreaks)
-                        serializer = GroupSerializer(group)
-                        group_data.append({'data': serializer.data, 'streak': streak})
-                return Response(group_data)
+                serializer = GroupSerializer(queryset, many = True)
+                return Response(serializer.data)
             else:
                 return Response({'error': "No matching group found from the search"}, status=status.HTTP_404_NOT_FOUND)  
         else:
             queryset = Group.objects.filter(user=user)
             if queryset:
-                group_data=[]
-                for group in queryset:
-                    if group:
-                        userstreaks=[]
-                        for user in group.user.all():
-                            streakset = Commit.objects.filter(user=user,type="Group").order_by('date').values('date').distinct()
-                            userstreaks.append(calculate_streak(streakset))
-                        streak = min(userstreaks)
-                        serializer = GroupSerializer(group)
-                        group_data.append({'data': serializer.data, 'streak': streak})
-                return Response(group_data)
+                serializer = GroupSerializer(queryset, many=True)
+                return Response(serializer.data)
             else:
                 return Response({'error': "No matching group found for the user"}, status=status.HTTP_404_NOT_FOUND)
             
@@ -142,7 +119,7 @@ class GroupView(APIView):
         user = request.user
         data.pop('action',None)
         join_code = data.pop('join_code',None)
-        group=Group.objects.get(code=join_code)
+        group=Group.objects.get(code=join_code) 
         print(group.user.all())
         if user in group.user.all():
             return Response({'msg':"User already exists ini group"},status=status.HTTP_400_BAD_REQUEST)
@@ -153,3 +130,4 @@ class GroupView(APIView):
 class DummyDataView(APIView):
     def get(self, request, *args, **kwargs):
         return Response({'name':"Bibhab"})
+        
