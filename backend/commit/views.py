@@ -36,22 +36,12 @@ class CommitView(APIView):
                 return Response({"msg":"No commit of the search found"})
             streakset = Commit.objects.filter(user=user).order_by('date').values('date').distinct()
             serializer = CommitSerializer(queryset, many=True)
-            streak = calculate_streak(streakset)
-            data={
-                'data':serializer.data,
-                'streak':streak
-            }
-            return Response(data)
+            return Response(serializer.data)
         else:
             queryset = Commit.objects.filter(user=user).order_by('date')
             streakset = Commit.objects.filter(user=user).order_by('date').values('date').distinct()
             serializer = CommitSerializer(queryset, many=True)
-            streak = calculate_streak(streakset)
-            data={
-                'data':serializer.data,
-                'streak':streak
-            }
-            return Response(data)
+            return Response(serializer.data)
         
     def post(self,request):
         data=request.data
