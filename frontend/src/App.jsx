@@ -4,6 +4,7 @@ import './App.css'
 
 import { Index } from './pages/index'
 import Login from './pages/login'
+import SingleGroup from './pages/singlegroup'
 
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
    <Routes>
     <Route path="/" element={<Index/>}/>
     <Route path="/login" element={<Login/>}/>
+    <Route path="/group/:id" element={<SingleGroup/>}/>
       </Routes>
   )
 }
