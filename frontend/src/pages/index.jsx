@@ -21,7 +21,7 @@ export const Index = () => {
                         Authorization: `Bearer ${accessToken}`
                     }
                 });
-                setCommit(response.data.data);
+                setCommit(response.data);
                 console.log('commitko',response.data);
             } catch (e) {
                 console.log("error ayooooooo");
@@ -36,9 +36,8 @@ export const Index = () => {
                             Authorization: `Bearer ${accessToken}`
                         }
                     });
-                    setGroups(response.data.data);
+                    setGroups(response.data);
                     console.log("group ko",response.data);
-                    console.log("group ko",response.data.data);
                 } catch (e) {
                     console.log(e);
                 }   
