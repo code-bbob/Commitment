@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
+import Navbar from "../components/navbar";
+import { GroupMembers } from "../components/groupmembers";
 
 const SingleGroup = () => {
     const params = useParams();
@@ -19,27 +21,21 @@ const SingleGroup = () => {
                     }
                 });
                 setGroup(response.data);
-                console.log('Group single ko',response.data);
+                console.log('Group single ko',response.data.user);
             } catch (e) {
                 console.log(e);
             }   
         }
         getGroup();
-    },[]);
+        console.log("asdasdasd",group.user);
 
+    },[]);
     // This is a single group page that contains the name of the group, list of users it has on the side and the commits made in that group.
     
     return(
-        <div className="container mx-auto">
-        <h1 className="text-3xl font-bold my-8">{group.name}</h1>
-        <div className="grid grid-cols-3 gap-4">
-            {group.user?.map((u) => (
-                <div className="bg-white p-4 rounded-lg shadow-lg">
-                    <h2 className="text-xl font-bold">{u.name}</h2>
-                    <p>{u.email}</p>
-                </div>
-            ))}
-        </div>
+        <>
+        <Navbar />
+        <GroupMembers users = {group.user}/>
         <div className="grid grid-cols-3 gap-4">
             {group.commit?.map((c) => (
                 <div className="bg-white p-4 rounded-lg shadow-lg">
@@ -47,9 +43,10 @@ const SingleGroup = () => {
                     <p>{c?.content}</p>
                     <p>{c.date}</p>
                 </div>
-            ))}
+            )
+            )}
             </div>
-    </div>
+        </>
 
     );
 
