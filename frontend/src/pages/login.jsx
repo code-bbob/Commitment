@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,6 +22,7 @@ const Login = () => {
       if (response.ok) {
         localStorage.setItem('accessToken', data.token.access);
         localStorage.setItem('refreshToken', data.token.refresh);
+        navigate('/');
       }
       console.log(data.token.access);
     } catch (err) {
