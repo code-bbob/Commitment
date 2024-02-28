@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import axios from "axios";
 import Navbar from "../components/navbar";
 import { GroupMembers } from "../components/groupmembers";
+import { GroupCode } from "../components/groupcode";
 
 const SingleGroup = () => {
     const params = useParams();
@@ -36,6 +37,7 @@ const SingleGroup = () => {
         <>
         <Navbar />
         <GroupMembers users = {group.user}/>
+        <GroupCode group={group} />
         <div className="grid grid-cols-3 gap-4">
             {group.commit?.map((c) => (
                 <div className="bg-white p-4 rounded-lg shadow-lg">
