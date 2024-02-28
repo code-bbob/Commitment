@@ -7,7 +7,9 @@ import Groups from "../components/groups";
 
 export const Index = () => {
     const accessToken = localStorage.getItem('accessToken');
+    console.log("index", accessToken);
     const refreshToken = localStorage.getItem('refreshToken');
+    
 
     const [commit, setCommit] = useState([]);
     const [user, setUser] = useState([]);
@@ -71,3 +73,5 @@ export const Index = () => {
         </>
     )
     };
+
+    
