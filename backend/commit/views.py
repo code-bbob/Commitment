@@ -50,12 +50,12 @@ class CommitView(APIView):
         serializer = CommitSerializer(data=data)
         if serializer.is_valid(raise_exception=True):
             commit_instance = serializer.save(user=user)#yo garena vane not null fail hunxa cause u need to provide user to model in order to save a new 
-            if data["type"] == "Group":
-            # Add this commit to all related groups
+            if data["type"]== "Group":
+        # Add this commit to all related groups
                 if data["group_code"]:
                     group = Group.objects.filter(user=user, code=data["group_code"]).first()
                     group.commit.add(commit_instance)#you need to pass an object instance here instead of the serialized data
-            return Response({"msg":serializer.data},status=status.HTTP_200_OK)
+        return Response({"msg":serializer.data},status=status.HTTP_200_OK)
         
 class GroupView(APIView):
     permission_classes = [IsAuthenticated]

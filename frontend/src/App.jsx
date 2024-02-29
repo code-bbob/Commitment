@@ -6,6 +6,7 @@ import { Index } from './pages/index'
 import Login from './pages/login'
 import SingleGroup from './pages/singlegroup'
 import Signup from './pages/signup'
+import CommitForm from './pages/commit'
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
     <Route path="/login" element={<Login/>}/>
     <Route path="/signup" element={<Signup/>}/>
     <Route path="/group/:id" element={<SingleGroup/>}/>
+    <Route path="/commit/post/" element={<CommitForm/>}/>
     
       </Routes>
   )
