@@ -1,11 +1,16 @@
 import React from 'react';
+import { useDispatch } from "react-redux";
+import { login, logout } from "../redux/rootSlice";
 
 const Navbar = ({user}) => {
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
     // Remove tokens from local storage
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
+    dispatch(logout());
+
     // Redirect or navigate to the login page
     // For example, redirect to the login page
     history.push('/login');
