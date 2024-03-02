@@ -1,9 +1,11 @@
 import React from 'react';
 import { useDispatch } from "react-redux";
-import { login, logout } from "../redux/rootSlice";
+import { login, logout } from "../redux/accessSlice";
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = ({user}) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     // Remove tokens from local storage
@@ -25,16 +27,16 @@ const Navbar = ({user}) => {
         <p className='text-white'>Welcome, {user?.name}! Lets rock it today!</p>
         <ul className="flex space-x-4">
           <li>
-            <a href="#" className="text-white hover:text-gray-300">Home</a>
+            <a href="/" className="text-white hover:text-gray-300">Home</a>
           </li>
           <li>
-            <a href="#" className="text-white hover:text-gray-300">Commits</a>
+            <a href="/commits" className="text-white hover:text-gray-300">Commits</a>
           </li>
           <li>
-            <a href="#" className="text-white hover:text-gray-300">Groups</a>
+            <a href="/groups" className="text-white hover:text-gray-300">Groups</a>
           </li>
           <li>
-            <a href="#" className="text-white hover:text-gray-300">Profile</a>
+            <a href="/profile" className="text-white hover:text-gray-300">Profile</a>
           </li>
           <li>
             <a href="/login" className="text-white hover:text-gray-300" onClick={handleLogout}>Logout</a>

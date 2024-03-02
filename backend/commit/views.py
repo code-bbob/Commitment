@@ -27,8 +27,9 @@ def calculate_streak(querysets):
 
 class CommitView(APIView):
     permission_classes = [IsAuthenticated]
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
         user = request.user
+        uuid = self.kwargs.get('uuid')
         search = self.request.query_params.get("search")
         if search:
             queryset = Commit.objects.filter(user=user, title__icontains =search).order_by('date')
@@ -37,6 +38,13 @@ class CommitView(APIView):
             streakset = Commit.objects.filter(user=user).order_by('date').values('date').distinct()
             serializer = CommitSerializer(queryset, many=True)
             return Response(serializer.data)
+        elif uuid:
+            commit = Commit.objects.get(user=user, code=uuid)
+            if commit:
+                serializer = CommitSerializer(commit)
+                return Response(serializer.data)
+            else:
+                return Response({"msg": "You are not authorized to view this commit or the commit doesnt exist"})
         else:
             queryset = Commit.objects.filter(user=user).order_by('date')
             streakset = Commit.objects.filter(user=user).order_by('date').values('date').distinct()

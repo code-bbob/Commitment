@@ -18,6 +18,7 @@ class Commit(models.Model):
     user = models.ForeignKey(User, related_name='commit', on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     content = models.TextField()
+    code = models.UUIDField(default=uuid.uuid4)
     date = models.DateField(default=datetime.date.today)
 
     def __str__(self):

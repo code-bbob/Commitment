@@ -7,7 +7,7 @@ class CommitSerializer(serializers.ModelSerializer):
     user = UserInfoSerializer(read_only=True)
     class Meta:
         model = Commit
-        fields = ['user','type','title','content','date']
+        fields = ['user','type','title','content','date','code']
 
 class GroupSerializer(serializers.ModelSerializer):
     user = UserInfoSerializer(read_only=True,many=True)#the serializer normally expects a single instance and without many=true it is gonna suppose the data is a single instance and look for email field but since it is a list it is not gonna find it normally resulting in an attribute error.  
