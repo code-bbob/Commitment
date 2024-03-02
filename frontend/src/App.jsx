@@ -9,6 +9,7 @@ import Signup from './pages/signup'
 import CommitForm from './pages/commit'
 import { useSelector } from "react-redux";
 import ProtectedRoute from './redux/protectedRoute'
+import SingleCommit from './pages/singleCommit'
 
 
 function App() {
@@ -17,10 +18,12 @@ function App() {
    <Routes>
     <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
       <Route path="/" element={<Index/>}/>
+      <Route path="/commit/:id" element={<SingleCommit/>}/>
+      <Route path="/group/:id" element={<SingleGroup/>}/>
     </Route>
     <Route path="/login" element={<Login/>}/>
     <Route path="/signup" element={<Signup/>}/>
-    <Route path="/group/:id" element={<SingleGroup/>}/>
+
     <Route path="/commit/post/" element={<CommitForm/>}/>
     
       </Routes>
