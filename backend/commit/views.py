@@ -35,13 +35,15 @@ class CommitView(APIView):
             queryset = Commit.objects.filter(user=user, title__icontains =search).order_by('date')
             if not queryset:
                 return Response({"msg":"No commit of the search found"})
-            streakset = Commit.objects.filter(user=user).order_by('date').values('date').distinct()
+            
             serializer = CommitSerializer(queryset, many=True)
             return Response(serializer.data)
         elif uuid:
-            commit = Commit.objects.get(user=user, code=uuid)
-            if commit:
-                serializer = CommitSerializer(commit)
+            print(uuid)
+            queryset = Commit.objects.filter(user=user, code=uuid).first()
+            print(queryset)
+            if queryset:
+                serializer = CommitSerializer(queryset)
                 return Response(serializer.data)
             else:
                 return Response({"msg": "You are not authorized to view this commit or the commit doesnt exist"})
