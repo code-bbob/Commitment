@@ -68,7 +68,7 @@ export const Index = () => {
         < Navbar user={user}/>
         <h1 className="text-2xl font-bold text-center my-10">Hi {user.name}</h1>
         <Heatmap data={commit}/>
-        <Groups groups = {groups}/>
+        <Groups groups = {groups} className=""/>
         <h1 className="text-2xl font-bold text-center my-10">Bye {user.name}</h1>
         </>
     )

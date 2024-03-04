@@ -24,7 +24,13 @@ const Navbar = ({user}) => {
     <nav className="bg-black py-5 px-4">
       <div className="container mx-auto flex justify-between items-center">
         <div className="text-white font-bold">Your Logo</div>
+        { user?(
         <p className='text-white'>Welcome, {user?.name}! Lets rock it today!</p>
+        ):
+        (
+          <p className='text-white'>Hey there! Hope you are doing great!</p>
+        )
+      }
         <ul className="flex space-x-4">
           <li>
             <a href="/" className="text-white hover:text-gray-300">Home</a>

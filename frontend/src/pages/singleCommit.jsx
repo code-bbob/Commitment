@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
 import Navbar from "../components/navbar";
-
-
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "../components/ui/card";
 const SingleCommit = () => {
     const params = useParams();
     const commitCode = params.id
@@ -21,7 +20,7 @@ const SingleCommit = () => {
                     }
                 });
                 setCommit(response.data);
-                console.log('Commit single ko',response.data.user);
+                
             } catch (e) {
                 console.log(e);
             }   
@@ -34,13 +33,14 @@ const SingleCommit = () => {
     return(
         <>
         <Navbar />
-        <div className="grid grid-cols-3 gap-4">
-                <div className="bg-white p-4 rounded-lg shadow-lg">
-                    <h2 className="text-xl font-bold">{commit.title}</h2>
-                    <p>{commit.content}</p>
-                    <p>{commit.date}</p>
-                </div>
-        </div>
+        <Card className="mx-80 my-10 w-1/2">
+            <CardHeader>
+            <CardTitle>{commit.title}</CardTitle>
+            <div className="border-t border-black mx-0"></div>
+            <CardDescription>Author: <a href= {`/user/${commit.user?.uuid}`}>{commit.user?.name} </a></CardDescription>
+            </CardHeader>
+            <CardContent>Lorem Lorem Lorem ipsum Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi, rerum neque repellat sit esse voluptate quis adipisci accusantium! Sit culpa odit, incidunt eaque delectus nobis omnis quibusdam dignissimos provident aliquam! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam illum inventore voluptatum tenetur officiis, ipsam nam doloremque itaque aliquid, eligendi, alias repellat amet ex. Sunt nulla voluptatum beatae laudantium officia. dolor sit amet consectetur adipisicing elit. Ipsa deleniti voluptas possimus vitae eos? Eveniet corrupti, ipsum dolor eius voluptas perferendis repudiandae maiores sit deleniti, sed similique vero quibusdam ab!{commit.content}</CardContent>
+          </Card>
         </>
 
     );

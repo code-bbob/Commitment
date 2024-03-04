@@ -1,4 +1,5 @@
 from django.db import models
+import uuid
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser,PermissionsMixin
 # Create your models here.
 
@@ -39,6 +40,7 @@ class User(AbstractBaseUser,PermissionsMixin):
         unique=True,
     )
     name = models.CharField(max_length=50)
+    uuid = models.UUIDField(default = uuid.uuid4, unique=True)  
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
