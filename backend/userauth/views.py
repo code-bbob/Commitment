@@ -7,6 +7,9 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
 import random
 from .utils import Util
+from .models import User
+from commit.models import Commit
+from commit.serializers import CommitSerializer
 from django.contrib.sessions.models import Session
 
 def generate_otp():
@@ -99,21 +102,30 @@ class UserPasswordResetView(APIView):
 
 class UserInfoView(APIView):
   permission_classes = [IsAuthenticated]
-  def get(self,request,format=None):
+  def get(self,request,*args, **kwargs):
     user=request.user
-    serializer=UserInfoSerializer(user)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    id = self.kwargs.get('id')
+    if id:
+      user = User.objects.filter(uuid=id).first()
+      if user != request.user:
+        commits = Commit.objects.filter(user=user, type="Public")
+        commit_serializer = CommitSerializer(commits, many=True)
+        commits = commit_serializer.data
+    user_serializer=UserInfoSerializer(user)
+    userinfo = user_serializer.data
+    return Response({"userinfo":userinfo,"commits":commits}, status=status.HTTP_200_OK)
+
   
-  def patch(self,request):
-    user = request.user
-    serializer = UserInfoSerializer(user)
-    if user:
-      data = request.data
-      new_username = request.data.get("username")
-      if new_username:
-        user.username = new_username
-        user.save()
-      return Response(serializer.data)
-    else:
-      return Response({"msg": "Invalid user"}, status=status.HTTP_400_BAD_REQUEST)
+  # def patch(self,request):
+  #   user = request.user
+  #   serializer = UserInfoSerializer(user)
+  #   if user:
+  #     data = request.data
+  #     new_username = request.data.get("username")
+  #     if new_username:
+  #       user.username = new_username
+  #       user.save()
+  #     return Response(serializer.data)
+  #   else:
+  #     return Response({"msg": "Invalid user"}, status=status.HTTP_400_BAD_REQUEST)
         

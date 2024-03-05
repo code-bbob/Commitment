@@ -16,4 +16,5 @@ urlpatterns = [
     path('reset-password/<uid>/<token>/', views.UserPasswordResetView.as_view(), name='reset-password'),
     path('signup/',views.SignupView.as_view(),name="signup"),
     path('info/',views.UserInfoView.as_view(), name='info'),
+    path('info/<str:id>', views.UserInfoView.as_view(), name='infoid'),
 ]
