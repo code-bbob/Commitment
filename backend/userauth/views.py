@@ -11,6 +11,7 @@ from .models import User
 from commit.models import Commit
 from commit.serializers import CommitSerializer
 from django.contrib.sessions.models import Session
+from commit.permissions import IsAuthor, Custom
 
 def generate_otp():
   random_number = random.randint(100000, 999999)
@@ -101,7 +102,7 @@ class UserPasswordResetView(APIView):
     return Response({'msg':'Password Reset Successfully'}, status=status.HTTP_200_OK)
 
 class UserInfoView(APIView):
-  permission_classes = [IsAuthenticated]
+  permission_classes = [IsAuthenticated, IsAuthor]
   def get(self,request,*args, **kwargs):
     user=request.user
     id = self.kwargs.get('id')
@@ -109,8 +110,8 @@ class UserInfoView(APIView):
       user = User.objects.filter(uuid=id).first()
       if user != request.user:
         commits = Commit.objects.filter(user=user, type="Public")
-        commit_serializer = CommitSerializer(commits, many=True)
-        commits = commit_serializer.data
+      commit_serializer = CommitSerializer(commits, many=True)
+      commits = commit_serializer.data
     user_serializer=UserInfoSerializer(user)
     userinfo = user_serializer.data
     return Response({"userinfo":userinfo,"commits":commits}, status=status.HTTP_200_OK)
@@ -128,4 +129,11 @@ class UserInfoView(APIView):
   #     return Response(serializer.data)
   #   else:
   #     return Response({"msg": "Invalid user"}, status=status.HTTP_400_BAD_REQUEST)
-        
+
+# class Test(APIView):
+#   permission_classes = [Custom]
+#   def get(self, request, *args, **kwargs):
+#     instance = Commit.objects.first()
+#     self.check_object_permissions(request, instance)
+#     serializer = CommitSerializer(instance)
+#     return Response(serializer.data)
