@@ -5,6 +5,8 @@ import Navbar from "../components/navbar";
 import { GroupMembers } from "../components/groupmembers";
 import { GroupCode } from "../components/groupcode";
 import { useNavigate } from "react-router-dom";
+import { Card } from '../components/ui/card';
+import { CardHeader, CardDescription, CardTitle, CardContent } from '../components/ui/card';
 
 const SingleGroup = () => {
     const params = useParams();
@@ -35,23 +37,60 @@ const SingleGroup = () => {
     },[]);
     // This is a single group page that contains the name of the group, list of users it has on the side and the commits made in that group.
     
-    return(
-        <>
+    return (
+      <>
         <Navbar />
-        <GroupMembers users = {group.user}/>
-        <GroupCode group={group} />
-        <div className="grid grid-cols-3 gap-4" >
-            {group.commit?.map((c) => (
-                <div className="bg-white p-4 rounded-lg shadow-lg"  onClick={() => navigate(`/commit/${c.code}`)} key={c.id}>
-                    <h2 className="text-xl font-bold">{c.title}</h2>
-                    <p>{c?.content}</p>
-                    <p>{c?.date}</p>
-                </div>  
-            )
-            )}
-            </div>
-        </>
+        <div className="flex flex-row w-screen">
+        
+        {/* left group */}
+        <div className="">
+          <GroupMembers users={group.user} />
+          <GroupCode group={group} />
+        </div>
 
+          <div className=" h-screen w-1 bg-black mx-7"></div>
+
+        {/* right group */}
+          <div className="my-5 flex flex-col items-center gap-5">
+             {group.commit?.map((commit) => (
+              <div key={commit.id} className="w-auto max-w-[80%]">
+                <Card className="">
+                  <CardHeader>
+                    <CardTitle>{commit.title}</CardTitle>
+                    <div className="border-t border-black relative"></div>
+                    <CardDescription>
+                      Author: {commit.user.name}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    Lorem Lorem Lorem ipsum Lorem, ipsum dolor sit amet
+                    Lorem Lorem Lorem ipsum Lorem, ipsum dolor sit amet
+                    Lorem Lorem Lorem ipsum Lorem, ipsum dolor sit amet
+                    Lorem Lorem Lorem ipsum Lorem, ipsum dolor sit amet
+                    Lorem Lorem Lorem ipsum Lorem, ipsum dolor sit amet
+                    Lorem Lorem Lorem ipsum Lorem, ipsum dolor sit amet
+                    Lorem Lorem Lorem ipsum Lorem, ipsum dolor sit amet
+                    Lorem Lorem Lorem ipsum Lorem, ipsum dolor sit amet
+                    Lorem Lorem Lorem ipsum Lorem, ipsum dolor sit amet
+                    consectetur adipisicing elit. Eligendi, rerum neque repellat
+                    sit esse voluptate quis adipisci accusantium! Sit culpa
+                    odit, incidunt eaque delectus nobis omnis quibusdam
+                    dignissimos provident aliquam! Lorem ipsum dolor sit amet
+                    consectetur, provident aliquam! Lorem ipsum dolor sit amet
+                    consectetur, provident aliquam! Lorem ipsum dolor sit amet
+                    consectetur, provident aliquam! Lorem ipsum dolor sit amet
+                    consectetur adipisicing elit. Ipsa deleniti voluptas
+                    possimus vitae eos? Eveniet corrupti, ipsum dolor eius
+                    voluptas perferendis repudiandae maiores sit deleniti, sed
+                    similique vero quibusdam ab!
+                    {commit.content}
+                  </CardContent>
+                </Card>
+              </div>
+            ))}
+          </div>
+        </div>
+      </>
     );
 
 }
