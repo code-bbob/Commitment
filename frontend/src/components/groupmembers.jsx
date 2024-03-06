@@ -29,7 +29,7 @@ import {
 
 export function GroupMembers( {users} ) {
     return (
-      <Card className="mx-4 my-4 w-80 h-full">
+      <Card className="mx-4 my-4 w-80 h-auto">
         <CardHeader>
           <CardTitle>Team Members</CardTitle>
           <CardDescription>

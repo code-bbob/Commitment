@@ -9,7 +9,7 @@ import {
   
 export function GroupCode( {group} ) {
     return (
-      <Card className="mx-4 my-4 w-80 h-full">
+      <Card className="mx-4 my-4 w-80 h-auto">
         <CardHeader>
           <CardTitle>Group Code</CardTitle>
           <CardDescription>
