@@ -31,29 +31,31 @@ export function GroupMembers( {users} ) {
     return (
       <Card className="mx-4 my-4 w-80 h-auto">
         <CardHeader>
-          <CardTitle>Team Members</CardTitle>
+          <CardTitle>Group Members</CardTitle>
           <CardDescription>
             Invite your team members to collaborate.
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-6">
+        {users?.map((user) => (
           <div className="flex items-center justify-between space-x-4">
             <div className="flex items-center space-x-4">
-              {users?.map((user) => (
+              
                 <>
                 <Avatar>
                 <AvatarImage src="/avatars/01.png" />
-                <AvatarFallback>OM</AvatarFallback>
+                <AvatarFallback>Bbob</AvatarFallback>
               </Avatar>
               <div>
               <p className="text-sm font-medium leading-none">{user?.name}</p>
               <p className="text-sm text-muted-foreground">{user?.email}</p>
             </div>
             </>
-              )
-              )}
+              
             </div>
             </div>
+            )
+            )}
         </CardContent>
       </Card>
     )

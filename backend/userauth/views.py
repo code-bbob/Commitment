@@ -108,8 +108,10 @@ class UserInfoView(APIView):
     id = self.kwargs.get('id')
     if id:
       user = User.objects.filter(uuid=id).first()
+      commits = Commit.objects.filter(user = user)
       if user != request.user:
         commits = Commit.objects.filter(user=user, type="Public")
+        print(f"haha{commits}")
       commit_serializer = CommitSerializer(commits, many=True)
       commits = commit_serializer.data
     user_serializer=UserInfoSerializer(user)

@@ -27,18 +27,18 @@ const UserInfo = () => {
             }   
         }
         getUser();
-        console.log(commit);
+        console.log(user);
     },[]);
     // This is a single group page that contains the name of the group, list of users it has on the side and the commits made in that group.
     
     return(
         <>
         <Navbar />
-        
+        <div>HI {user?.userinfo?.name}</div>        
         </>
 
     );
 
 }
 
-export default SingleCommit
+export default UserInfo
