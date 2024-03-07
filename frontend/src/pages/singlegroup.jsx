@@ -44,12 +44,11 @@ const SingleGroup = () => {
         
         {/* left group */}
         <div className="">
+        <GroupCode group={group} />
           <GroupMembers users={group.user} />
-          <GroupCode group={group} />
         </div>
 
-          <div className=" h-screen w-1 bg-black mx-7"></div>
-
+        <div className="sticky top-0 h-screen w-1 bg-black mx-7"></div>
         {/* right group */}
           <div className="my-5 flex flex-col items-center gap-5">
              {group.commit?.map((commit) => (
@@ -59,7 +58,7 @@ const SingleGroup = () => {
                     <CardTitle>{commit.title}</CardTitle>
                     <div className="border-t border-black relative"></div>
                     <CardDescription>
-                      Author: {commit.user.name}
+                      <a href={`/user/${commit.user?.uuid}`}>Author: {commit.user.name}</a>
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
