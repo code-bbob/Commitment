@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import ProtectedRoute from './redux/protectedRoute'
 import SingleCommit from './pages/singleCommit'
 import UserInfo from './pages/userinfo'
+import Groups from './pages/groups'
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
     <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
       <Route path="/" element={<Index/>}/>
       <Route path="/commits" element={<Commits/>}/>
+      <Route path="/groups" element={<Groups/>}/>
       <Route path="/commit/:id" element={<SingleCommit/>}/>
       <Route path="/group/:id" element={<SingleGroup/>}/>
       <Route path='/user/:id' element={<UserInfo/>}/>
