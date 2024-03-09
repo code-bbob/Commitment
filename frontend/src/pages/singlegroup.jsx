@@ -53,7 +53,7 @@ const SingleGroup = () => {
           <div className="my-5 flex flex-col items-center gap-5">
              {group.commit?.map((commit) => (
               <div key={commit.id} className="w-auto max-w-[80%]">
-                <Card className="">
+                <Card>
                   <CardHeader>
                     <CardTitle>{commit.title}</CardTitle>
                     <div className="border-t border-black relative"></div>
