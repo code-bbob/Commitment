@@ -4,10 +4,12 @@ import Navbar from '../components/navbar';
 import { Card } from '../components/ui/card';
 import { CardHeader, CardDescription, CardTitle, CardContent } from '../components/ui/card';
 import Groups from "../components/groups";
+import { useNavigate } from 'react-router-dom';
 
 const Commits = () => {
   const [commits, setCommits] = useState([]);
   const accessToken = localStorage.getItem('accessToken');
+
 
   useEffect(() => {
     const fetchCommits = async () => {
@@ -37,8 +39,8 @@ const Commits = () => {
         <div>
         <Groups/>
         </div>
-
-        <div className="sticky top-0 h-screen w-1 bg-black mx-7"></div>
+        {/* line */}
+        <div className="sticky top-0 h-screen w-[0.5px] bg-black mx-7"></div>
 
       <div className="my-5 flex flex-col items-center">
       {commits.map((commit) => (

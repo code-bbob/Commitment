@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
 import Navbar from "../components/navbar";
-import { GroupMembers } from "../components/groupmembers";
+import GroupMembers  from "../components/groupmembers";
 import { GroupCode } from "../components/groupcode";
 import { useNavigate } from "react-router-dom";
 import { Card } from '../components/ui/card';
@@ -48,12 +48,12 @@ const SingleGroup = () => {
           <GroupMembers users={group.user} />
         </div>
 
-        <div className="sticky top-0 h-screen w-1 bg-black mx-7"></div>
+        <div className="sticky top-0 h-screen w-[0.5px] bg-black mx-7"></div>
         {/* right group */}
           <div className="my-5 flex flex-col items-center gap-5">
              {group.commit?.map((commit) => (
               <div key={commit.id} className="w-auto max-w-[80%]">
-                <Card>
+                <Card onClick={() =>navigate(`/commit/${commit.code}`)}>
                   <CardHeader>
                     <CardTitle>{commit.title}</CardTitle>
                     <div className="border-t border-black relative"></div>
