@@ -25,9 +25,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "./ui/popover"
+import { useNavigate } from "react-router-dom"
 
-
-export function GroupMembers( {users} ) {
+const GroupMembers = ({users}) => {
+  const navigate = useNavigate();
     return (
       <Card className="mx-4 my-4 w-80 h-auto">
         <CardHeader>
@@ -38,7 +39,7 @@ export function GroupMembers( {users} ) {
         </CardHeader>
         <CardContent className="grid gap-6">
         {users?.map((user) => (
-          <div className="flex items-center justify-between space-x-4">
+          <div onClick = {()=>navigate(`/user/${user.uuid}`)} className="flex items-center justify-between space-x-4">
             <div className="flex items-center space-x-4">
               
                 <>
@@ -60,3 +61,5 @@ export function GroupMembers( {users} ) {
       </Card>
     )
   }
+
+  export default GroupMembers
