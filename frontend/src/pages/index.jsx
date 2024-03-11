@@ -9,9 +9,9 @@ import useRefreshToken from "../hooks/refreshToken";
 
 
 export const Index = () => {
-    const accessToken = localStorage.getItem('accessToken');
-    const refreshToken = localStorage.getItem('refreshToken');
-    const refresh = useRefreshToken();
+    // const accessToken = localStorage.getItem('accessToken');
+    // const refreshToken = localStorage.getItem('refreshToken');
+    const {refresh,accessToken,refreshToken} = useRefreshToken();
     
     const [commit, setCommit] = useState([]);
     const [user, setUser] = useState([]);
@@ -48,14 +48,14 @@ export const Index = () => {
                     console.log("going to refresh");
                     await refresh();
                     console.log("refreshed.................")
-                    await fetchData();
+                    // await fetchData();
                     
                 }
         }
         }
     
         fetchData();
-    }, []);
+    }, [accessToken]);
     return(
         <>
         < Navbar user={user}/>
