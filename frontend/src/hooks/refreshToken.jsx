@@ -16,6 +16,7 @@ const  useRefreshToken = () => {
         setAccessToken(newAccessToken);
         await new Promise((resolve) => {
           localStorage.setItem('accessToken', newAccessToken);
+          setAccessToken(newAccessToken);
           resolve();
       });
         console.log("setting access token.....",newAccessToken);
@@ -29,7 +30,7 @@ const  useRefreshToken = () => {
     };
 
 
-  return refresh;
+  return refresh,accessToken,refreshToken;
 };
 
 export default useRefreshToken;
