@@ -8,4 +8,5 @@ urlpatterns = [
     path('<str:uuid>',views.CommitView.as_view(), name= "specific_commit"),
     path('group/', views.GroupView.as_view(), name= 'group'),
     path('group/<str:uuid>',views.GroupView.as_view(), name= "specific_group"),
+    path('dummy/', views.DummyDataView.as_view(), name= 'dummy')
 ]

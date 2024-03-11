@@ -130,4 +130,8 @@ class GroupView(APIView):
 class DummyDataView(APIView):
     def get(self, request, *args, **kwargs):
         return Response({'name':"Bibhab"})
+    
+    def post(self,request, *args, **kwargs):
+        data = request.data
+        return Response(data)
         
