@@ -30,7 +30,7 @@ const  useRefreshToken = () => {
     };
 
 
-  return refresh,accessToken,refreshToken;
+  return {refresh,accessToken,refreshToken};
 };
 
 export default useRefreshToken;
