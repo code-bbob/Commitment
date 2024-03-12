@@ -28,6 +28,15 @@ import {
 import { useNavigate } from "react-router-dom"
 
 const GroupMembers = ({users}) => {
+  const getInitials = (name) => {
+    const initials = name.split(' ')
+      .map(word => word.charAt(0))
+      .join('');
+    return initials.toUpperCase();
+  }
+
+
+  
   const navigate = useNavigate();
     return (
       <Card className="mx-4 my-4 w-80 h-auto">
@@ -45,7 +54,7 @@ const GroupMembers = ({users}) => {
                 <>
                 <Avatar>
                 <AvatarImage src="/avatars/01.png" />
-                <AvatarFallback>Bbob</AvatarFallback>
+                <AvatarFallback>{getInitials(user?.name)}</AvatarFallback>
               </Avatar>
               <div>
               <p className="text-sm font-medium leading-none">{user?.name}</p>

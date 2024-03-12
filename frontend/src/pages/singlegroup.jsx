@@ -7,19 +7,20 @@ import { GroupCode } from "../components/groupcode";
 import { useNavigate } from "react-router-dom";
 import { Card } from '../components/ui/card';
 import { CardHeader, CardDescription, CardTitle, CardContent } from '../components/ui/card';
+import useRefreshToken from "../hooks/refreshToken";
 
 const SingleGroup = () => {
     const params = useParams();
     const groupCode = params.id;
     const navigate = useNavigate();
-    const accessToken = localStorage.getItem('accessToken');
-    const refreshToken = localStorage.getItem('refreshToken');
+    const {accessToken, refreshToken, refresh} = useRefreshToken();
 
     const [group, setGroup] = useState([]);
 
     useEffect(() => {
         async function getGroup() {
             try {
+              console.log(accessToken);
                 const response = await axios.get(`http://127.0.0.1:8000/api/commit/group/${groupCode}`, {
                     headers: {
                         Authorization: `Bearer ${accessToken}`
@@ -28,19 +29,22 @@ const SingleGroup = () => {
                 setGroup(response.data);
                 console.log('Group single ko',response.data.user);
             } catch (e) {
+              console.log("error ayo #################################");
                 console.log(e);
+                refresh();
             }   
         }
         getGroup();
         console.log("bibhab",group);
 
-    },[]);
+    },[accessToken]);
     // This is a single group page that contains the name of the group, list of users it has on the side and the commits made in that group.
     
     return (
       <>
         <Navbar />
-        <div className="flex flex-row w-screen">
+        {/* screen width rakhda navbar sanga mildaina */}
+        <div className="flex flex-row">
         
         {/* left group */}
         <div className="">
@@ -50,9 +54,9 @@ const SingleGroup = () => {
 
         <div className="sticky top-0 h-screen w-[0.5px] bg-black mx-7"></div>
         {/* right group */}
-          <div className="my-5 flex flex-col items-center gap-5">
+        <div className="my-5 flex flex-col items-center">
              {group.commit?.map((commit) => (
-              <div key={commit.id} className="w-auto max-w-[80%]">
+              <div key={commit.id} className="w-auto max-w-[80%] my-4">
                 <Card onClick={() =>navigate(`/commit/${commit.code}`)}>
                   <CardHeader>
                     <CardTitle>{commit.title}</CardTitle>

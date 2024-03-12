@@ -42,7 +42,7 @@ const Navbar = ({user}) => {
             <a href="/groups" className="text-white hover:text-gray-300">Groups</a>
           </li>
           <li>
-            <a href="/profile" className="text-white hover:text-gray-300">Profile</a>
+            <a href={`/user/${user?.uuid}`} className="text-white hover:text-gray-300">Profile</a>
           </li>
           <li>
             <a href="/login" className="text-white hover:text-gray-300" onClick={handleLogout}>Logout</a>
