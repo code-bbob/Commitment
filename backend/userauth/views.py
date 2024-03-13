@@ -32,12 +32,12 @@ class SignupView(APIView):
     otp = str(generate_otp())
     request.session['otp'] = otp
     data = {
-        'subject':'Reset Your Password',
+        'subject':'OTP for regitration',
         'body': "Your otp is "+otp,
         'to_email':request.data['email']
       } 
     Util.send_email(data)
-    return Response({'msg':'sent otp'}, status=status.HTTP_201_CREATED)
+    return Response({'msg':'sent otp'}, status=status.HTTP_200_OK)
   
 class UserRegistrationView(APIView):
   def post(self,request, format=None):
