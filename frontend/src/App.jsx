@@ -13,6 +13,7 @@ import SingleCommit from './pages/singleCommit'
 import UserInfo from './pages/userinfo'
 import Groups from './pages/groups'
 import  UserAuthForm  from './pages/signup'
+import UserRegister from './pages/userRegister'
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
     </Route>
     <Route path="/login" element={<Login/>}/>
     <Route path="/signup" element={<UserAuthForm/>}/>
+    <Route path='/register' element={<UserRegister/>}/>
 
     <Route path="/commit/post/" element={<CommitForm/>}/>
     
