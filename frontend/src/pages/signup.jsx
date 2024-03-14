@@ -16,10 +16,12 @@ import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -34,6 +36,7 @@ const Signup = () => {
       );
       if (response.status === 200) {
         console.log("success");
+        navigate('/register', { state: { email: email } });
       } else {
         console.error("Failed to create account");
       }
@@ -41,6 +44,7 @@ const Signup = () => {
       console.error("Error:", error);
     }
     setIsLoading(false);
+    
   };
 
   return (
@@ -52,6 +56,21 @@ const Signup = () => {
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
+        <div className="grid gap-2">
+          <Label htmlFor="email">Email</Label>
+          <Input
+            id="email"
+            type="email"
+            placeholder="m@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-background px-2 text-muted-foreground">
+              Or continue with
+            </span>
+          </div>
         <div className="grid grid-cols-2 gap-6">
           <Button variant="outline">
             <FontAwesomeIcon icon={faGithub} className="mx-1" />
@@ -66,21 +85,6 @@ const Signup = () => {
           <div className="absolute inset-0 flex items-center">
             <span className="w-full border-t" />
           </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-background px-2 text-muted-foreground">
-              Or continue with
-            </span>
-          </div>
-        </div>
-        <div className="grid gap-2">
-          <Label htmlFor="email">Email</Label>
-          <Input
-            id="email"
-            type="email"
-            placeholder="m@example.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
         </div>
       </CardContent>
       <CardFooter>
