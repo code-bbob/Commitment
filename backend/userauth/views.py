@@ -30,19 +30,21 @@ def get_tokens_for_user(user):
 class SignupView(APIView):
   def post(self, request, format=None):
     otp = str(generate_otp())
+    print(otp)
     request.session['otp'] = otp
     data = {
         'subject':'OTP for regitration',
         'body': "Your otp is "+otp,
         'to_email':request.data['email']
       } 
-    Util.send_email(data)
+    # Util.send_email(data)
     return Response({'msg':'sent otp'}, status=status.HTTP_200_OK)
   
 class UserRegistrationView(APIView):
   def post(self,request, format=None):
     otpobtained=request.data['otp']
     stored_otp = request.session.get('otp')
+    print(stored_otp)
     if otpobtained ==stored_otp:
       serializer = UserRegistrationSerializer(data=request.data)
       serializer.is_valid(raise_exception=True)
