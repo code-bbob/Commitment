@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "../components/ui/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faGoogle } from "@fortawesome/free-brands-svg-icons";
@@ -33,10 +31,14 @@ const Signup = () => {
         {
           email: email,
         }
+      ,
+      {
+        withCredentials: true 
+      }
       );
       if (response.status === 200) {
         console.log("success");
-        navigate('/register', { state: { email: email } });
+        navigate('/register/', { state: { email: email } });
       } else {
         console.error("Failed to create account");
       }

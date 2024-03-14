@@ -51,6 +51,9 @@ const UserRegister = () => {
                password: password,
                password2: confirmPassword, 
                otp: otp
+            },
+            {
+                withCredentials: true 
             }
           );
 
