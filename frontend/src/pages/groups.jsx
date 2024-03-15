@@ -4,20 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/navbar';
 import { Card } from '../components/ui/card';
 import { CardHeader, CardDescription, CardTitle, CardContent } from '../components/ui/card';
+import useAxios from '../utils/useAxios';
 
 const Groups = () => {
   const [groups, setGroups] = useState([]);
   const navigate = useNavigate();
-  const accessToken = localStorage.getItem('accessToken');
+  const api = useAxios();
   useEffect(() => {
     const fetchGroups = async () => {
-      console.log(accessToken);
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/commit/group/', {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
+        const response = await api.get('api/commit/group/');
         console.log('Groups', response.data[0]);
         setGroups(response.data);
 
