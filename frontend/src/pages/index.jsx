@@ -12,7 +12,6 @@ export const Index = () => {
     // const accessToken = localStorage.getItem('accessToken');
     // const refreshToken = localStorage.getItem('refreshToken');
     const {refresh,accessToken,refreshToken} = useRefreshToken();
-    
     const [commit, setCommit] = useState([]);
     const [user, setUser] = useState([]);
     const [groups, setGroups] = useState([]);
@@ -56,6 +55,7 @@ export const Index = () => {
     
         fetchData();
     }, [accessToken]);
+
     return(
         <>
         < Navbar user={user}/>
