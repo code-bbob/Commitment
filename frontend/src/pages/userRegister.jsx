@@ -69,8 +69,8 @@ const UserRegister = () => {
             setPassword('');
             setConfirmPassword('');
             setOtp('');
-            localStorage.setItem('accessToken', data.token.access);
-            localStorage.setItem('refreshToken', data.token.refresh);
+            localStorage.setItem('accessToken', response.data.token.access);
+            localStorage.setItem('refreshToken', response.data.token.refresh);
             dispatch(login());
             navigate('/');
             

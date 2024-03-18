@@ -93,7 +93,7 @@ class GroupView(APIView):
                 serializer = GroupSerializer(queryset, many=True)
                 return Response(serializer.data)
             else:
-                return Response({'error': "No matching group found for the user"}, status=status.HTTP_404_NOT_FOUND)
+                return Response({'error': "No matching group found for the user"}, status=status.HTTP_200_OK)
             
     def post(self,request):
         action = request.data.get('action')

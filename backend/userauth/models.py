@@ -64,3 +64,9 @@ class User(AbstractBaseUser,PermissionsMixin):
         return self.email
 
 
+class Otp(models.Model):
+    otp = models.CharField(max_length=6)
+    email = models.EmailField()
+
+    def __str__(self):
+        return (f"{self.email} : {self.otp}")

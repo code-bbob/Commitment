@@ -24,8 +24,8 @@ const useAxios = () => {
                 const response = await axios.post(`${baseURL}/api/userauth/refresh-token/`, {
                     refresh: localStorage.getItem('refreshToken'),
                 });
-                req.headers.Authorization = `Bearer ${response.data.access}`;
                 localStorage.setItem('accessToken', response.data.access);
+                req.headers.Authorization = `Bearer ${response.data.access}`;
             } catch (error) {
                 console.error("Failed to refresh token:", error);
                 // Handle token refresh failure (e.g., redirect to login page)
