@@ -12,7 +12,7 @@ from commit.models import Commit
 from commit.serializers import CommitSerializer
 from django.contrib.sessions.models import Session
 from commit.permissions import IsAuthor, Custom
-
+from .models import Otp
 def generate_otp():
   random_number = random.randint(100000, 999999)
   return random_number
@@ -30,29 +30,36 @@ def get_tokens_for_user(user):
 class SignupView(APIView):
   def post(self, request, format=None):
     otp = str(generate_otp())
+    email = request.data['email']
+    Otp.objects.create(otp=otp, email=email)
     print(otp)
-    request.session['otp'] = otp
+    # request.session['otp'] = otp
     data = {
         'subject':'OTP for regitration',
         'body': "Your otp is "+otp,
-        'to_email':request.data['email']
+        'to_email':email
       } 
-    # Util.send_email(data)
+    Util.send_email(data)
     return Response({'msg':'sent otp'}, status=status.HTTP_200_OK)
   
 class UserRegistrationView(APIView):
   def post(self,request, format=None):
     otpobtained=request.data['otp']
-    stored_otp = request.session.get('otp')
+    stored_otp = Otp.objects.get(email=request.data['email']).otp
     print(stored_otp)
-    if otpobtained ==stored_otp:
-      serializer = UserRegistrationSerializer(data=request.data)
-      serializer.is_valid(raise_exception=True)
-      user = serializer.save()
-      token = get_tokens_for_user(user)
-      return Response({'token':token, 'msg':'Registration Successful'}, status=status.HTTP_201_CREATED)
+    if stored_otp:
+      if otpobtained ==stored_otp:
+        serializer = UserRegistrationSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        token = get_tokens_for_user(user)
+        object = Otp.objects.get(email=request.data['email'])
+        object.delete()
+        return Response({'token':token, 'msg':'Registration Successful'}, status=status.HTTP_201_CREATED)
+      else:
+        return Response({'msg': 'Otp doesnt match try again!'}, status=status.HTTP_400_BAD_REQUEST)
     else:
-      return Response({'msg': 'Otp doesnt match try again!'}, status=status.HTTP_400_BAD_REQUEST)
+      return Response({'msg': 'Otp is not present in the system!'}, status=status.HTTP_400_BAD_REQUEST)
     
 class UserLoginView(APIView):
   def post(self, request, format=None):

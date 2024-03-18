@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as UserAdmin
-from .models import User
+from .models import User, Otp
 
 class UserModelAdmin(UserAdmin):
     # The fields to be used in displaying the User model.
@@ -30,3 +30,4 @@ class UserModelAdmin(UserAdmin):
 
 # Now register the new UserAdmin...
 admin.site.register(User, UserModelAdmin)
+admin.site.register(Otp)
