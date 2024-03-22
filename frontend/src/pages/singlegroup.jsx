@@ -8,12 +8,14 @@ import { useNavigate } from "react-router-dom";
 import { Card } from '../components/ui/card';
 import { CardHeader, CardDescription, CardTitle, CardContent } from '../components/ui/card';
 import useRefreshToken from "../hooks/refreshToken";
+import useAxios from '../utils/useAxios';
 
 const SingleGroup = () => {
     const params = useParams();
     const groupCode = params.id;
     const navigate = useNavigate();
     const {accessToken, refreshToken, refresh} = useRefreshToken();
+    const api = useAxios();
 
     const [group, setGroup] = useState([]);
 

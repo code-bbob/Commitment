@@ -3,22 +3,20 @@ import { useParams } from "react-router";
 import axios from "axios";
 import Navbar from "../components/navbar";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "../components/ui/card";
+import useAxios from '../utils/useAxios';
 const SingleCommit = () => {
     const params = useParams();
     const commitCode = params.id
     const accessToken = localStorage.getItem('accessToken');
     const refreshToken = localStorage.getItem('refreshToken');
+    const api = useAxios()
 
     const [commit, setCommit] = useState([]);
 
     useEffect(() => {
         async function getCommit() {
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/api/commit/${commitCode}`, {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`
-                    }
-                });
+                const response = await api.get(`api/commit/${commitCode}`);
                 setCommit(response.data);
                 
             } catch (e) {

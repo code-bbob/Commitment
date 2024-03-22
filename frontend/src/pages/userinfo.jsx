@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
+import useAxios from '../utils/useAxios';
 import Navbar from "../components/navbar";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "../components/ui/card";
 
@@ -9,17 +10,14 @@ const UserInfo = () => {
     const userId = params.id
     const accessToken = localStorage.getItem('accessToken');
     const refreshToken = localStorage.getItem('refreshToken');
+    const api = useAxios();
 
     const [user, setUser] = useState([]);
 
     useEffect(() => {
         async function getUser() {
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/api/userauth/info/${userId}`, {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`
-                    }
-                });
+                const response = await api.get(`api/userauth/info/${userId}`);
                 setUser(response.data);
                 
             } catch (e) {
