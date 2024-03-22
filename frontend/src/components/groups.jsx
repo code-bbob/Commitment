@@ -26,19 +26,22 @@ const Groups = () => {
     };
 
     fetchGroups();
+    
   }, []);
 
 
   return (
     <>
     <h1 className="text-3xl font-bold mx-10 my-8">Groups</h1>
-    {groups?.map((group) => (
+    {
+      groups.length>0?groups?.map((group) => (
         < Card className = "w-40 m-10" onClick={() => navigate(`/group/${group?.code}`)} key={group?.id}>
         <CardHeader >
         {group?.name}
         </CardHeader>
         </Card>
-        ))}
+        )):<h1 className="text-3xl font-bold mx-10 my-8">No Groups</h1>
+    }
     </>
     // <div className="container mx-auto">
     //     <h1 className="text-3xl font-bold my-8">Groups</h1>

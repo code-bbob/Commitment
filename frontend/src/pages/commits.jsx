@@ -5,21 +5,19 @@ import { Card } from '../components/ui/card';
 import { CardHeader, CardDescription, CardTitle, CardContent } from '../components/ui/card';
 import Groups from "../components/groups";
 import { useNavigate } from 'react-router-dom';
+import useAxios from '../utils/useAxios';
 
 const Commits = () => {
   const [commits, setCommits] = useState([]);
   const accessToken = localStorage.getItem('accessToken');
+  const api = useAxios();
 
 
   useEffect(() => {
     const fetchCommits = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://127.0.0.1:8000/api/commit/', {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
+        const response = await api.get('api/commit/');
         setCommits(response.data);
       } catch (error) {
         console.error(error);

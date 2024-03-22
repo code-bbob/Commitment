@@ -28,7 +28,7 @@ const Groups = () => {
   return (
     <div>
         <Navbar/>
-      {groups.map((group) => (
+      {groups.length>0?groups.map((group) => (
         <div key={group?.id} onClick={() => navigate(`/group/${group?.code}`)}  >
           <Card className="mx-80 my-10 w-1/2">
             <CardHeader>
@@ -37,7 +37,7 @@ const Groups = () => {
             </CardHeader>
           </Card>
         </div>
-      ))}
+      )):<h1>No groups</h1>}
     </div>
   );
 };
