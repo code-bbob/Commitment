@@ -4,7 +4,14 @@ import { useLocation } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { login, logout } from "../redux/accessSlice";
-
+import {
+    InputOTP,
+    InputOTPGroup,
+    InputOTPSeparator,
+    InputOTPSlot,
+  } from "../components/ui/input-otp"
+  
+  
 const UserRegister = () => {
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
@@ -80,8 +87,7 @@ const UserRegister = () => {
         console.log(error);
     }
 
-        
-        
+      
     };
 
     return (
@@ -134,14 +140,29 @@ const UserRegister = () => {
                 </div>
                 <div className="mb-6">
                     <label htmlFor="otp" className="block mb-2 text-sm font-bold text-gray-700">OTP:</label>
-                    <input
-                        type="text"
-                        id="otp"
-                        value={otp}
-                        onChange={handleOtpChange}
-                        className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                    />
-                </div>
+                    
+      <InputOTP
+        maxLength={6}
+        value={otp}
+        onChange={(otp) => setOtp(otp)}
+      >
+        <InputOTPGroup>
+          <InputOTPSlot index={0} />
+          <InputOTPSlot index={1} />
+          <InputOTPSlot index={2} />
+          <InputOTPSlot index={3} />
+          <InputOTPSlot index={4} />
+          <InputOTPSlot index={5} />
+        </InputOTPGroup>
+      </InputOTP>
+      <div className="text-center text-sm">
+        {otp === "" ? (
+          <>Enter your one-time password.</>
+        ) : (
+          <>You entered: {otp}</>
+        )}
+      </div>
+    </div>
                 <button type="submit" className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline">
                     Register
                 </button>
