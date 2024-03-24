@@ -7,7 +7,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "../co
 
 const UserInfo = () => {
     const params = useParams();
-    const userId = params.id
+    const userId = params.id;
     const api = useAxios();
 
     const [user, setUser] = useState([]);
@@ -15,7 +15,8 @@ const UserInfo = () => {
     useEffect(() => {
         async function getUser() {
             try {
-                const response = await api.get(`api/userauth/info/${userId}`);
+                const url = userId?`api/userauth/info/${userId}`:`api/userauth/info/`;
+                const response = await api.get(url);
                 setUser(response.data);
                 
             } catch (e) {
@@ -23,6 +24,7 @@ const UserInfo = () => {
             }   
         }
         getUser();
+        
     },[]);
     // This is a single group page that contains the name of the group, list of users it has on the side and the commits made in that group.
     
