@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import useAxios from '../utils/useAxios';
 
 const Commits = () => {
+  const navigate = useNavigate();
   const [commits, setCommits] = useState([]);
   const accessToken = localStorage.getItem('accessToken');
   const api = useAxios();
@@ -43,11 +44,13 @@ const Commits = () => {
       <div className="my-5 flex flex-col items-center">
       {commits.map((commit) => (
         <div key={commit.id} className="w-auto max-w-[80%] my-4">
-          <Card>
+          <Card onClick={() =>navigate(`/commit/${commit.code}`)}>
             <CardHeader>
             <CardTitle>{commit.title}</CardTitle>
             <div className="border-t border-black"></div>
-            <CardDescription>Author: {commit.user.name}</CardDescription>
+            <CardDescription>
+              <a href={`/user/${commit.user?.uuid}`}>Author: {commit.user.name}</a>
+            </CardDescription>
             </CardHeader>
             <CardContent>Lorem Lorem Lorem ipsum Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi, rerum neque repellat sit esse voluptate quis adipisci accusantium! Sit culpa odit, incidunt eaque delectus nobis omnis quibusdam dignissimos provident aliquam! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam illum inventore voluptatum tenetur officiis, ipsam nam doloremque itaque aliquid, eligendi, alias repellat amet ex. Sunt nulla voluptatum beatae laudantium officia. dolor sit amet consectetur adipisicing elit. Ipsa deleniti voluptas possimus vitae eos? Eveniet corrupti, ipsum dolor eius voluptas perferendis repudiandae maiores sit deleniti, sed similique vero quibusdam ab!{commit.content}</CardContent>
           </Card>

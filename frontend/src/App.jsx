@@ -26,7 +26,10 @@ function App() {
       <Route path="/groups" element={<Groups/>}/>
       <Route path="/commit/:id" element={<SingleCommit/>}/>
       <Route path="/group/:id" element={<SingleGroup/>}/>
-      <Route path='/user/:id' element={<UserInfo/>}/>
+      <Route path='/user/' element={<UserInfo/>}>
+        <Route path=':id'/>
+        </Route>
+
     </Route>
     <Route path="/login" element={<Login/>}/>
     <Route path="/signup" element={<UserAuthForm/>}/>

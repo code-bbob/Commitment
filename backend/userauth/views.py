@@ -129,8 +129,11 @@ class UserInfoView(APIView):
       return Response({"userinfo":userinfo,"commits":commits}, status=status.HTTP_200_OK)
     else:
       user_serializer=UserInfoSerializer(user)
+      commits = Commit.objects.filter(user=user)
+      commit_serializer=CommitSerializer(commits, many = True)
       userinfo = user_serializer.data
-      return Response(userinfo, status=status.HTTP_200_OK)
+      commits = commit_serializer.data
+      return Response({"userinfo":userinfo,"commits" : commits}, status=status.HTTP_200_OK)
 
   
   # def patch(self,request):

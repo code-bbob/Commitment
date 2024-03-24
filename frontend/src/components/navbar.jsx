@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { login, logout } from "../redux/accessSlice";
 import { useNavigate } from 'react-router-dom';
 
-const Navbar = ({user}) => {
+const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -24,13 +24,13 @@ const Navbar = ({user}) => {
     <nav className="bg-black py-5 px-4">
       <div className="container mx-auto flex justify-between items-center">
         <div className="text-white font-bold">Your Logo</div>
-        { user?(
-        <p className='text-white'>Welcome, {user?.name}! Lets rock it today!</p>
+        {/* { user?(
+        <p className='text-white'>Welcome, {}! Lets rock it today!</p>
         ):
         (
           <p className='text-white'>Hey there! Hope you are doing great!</p>
         )
-      }
+      } */}
         <ul className="flex space-x-4">
           <li>
             <a href="/" className="text-white hover:text-gray-300">Home</a>
@@ -42,7 +42,7 @@ const Navbar = ({user}) => {
             <a href="/groups" className="text-white hover:text-gray-300">Groups</a>
           </li>
           <li>
-            <a href={`/user/${user?.uuid}`} className="text-white hover:text-gray-300">Profile</a>
+            <a href={`/user/`} className="text-white hover:text-gray-300">Profile</a>
           </li>
           <li>
             <a href="/login" className="text-white hover:text-gray-300" onClick={handleLogout}>Logout</a>

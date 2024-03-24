@@ -33,9 +33,9 @@ const SingleCommit = () => {
         <Navbar />
         <Card className="mx-80 my-10 w-1/2">
             <CardHeader>
-            <CardTitle>{commit.title}</CardTitle>
+            <CardTitle>{commit?.title}</CardTitle>
             <div className="border-t border-black mx-0"></div>
-            <CardDescription>Author: <a href= {`/user/${commit.user?.uuid}`}>{commit.user?.name} </a></CardDescription>
+            <CardDescription>Author: <a href= {`/user/${commit?.user?.uuid}`}>{commit.user?.name} </a></CardDescription>
             </CardHeader>
             <CardContent>Lorem Lorem Lorem ipsum Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi, rerum neque repellat sit esse voluptate quis adipisci accusantium! Sit culpa odit, incidunt eaque delectus nobis omnis quibusdam dignissimos provident aliquam! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam illum inventore voluptatum tenetur officiis, ipsam nam doloremque itaque aliquid, eligendi, alias repellat amet ex. Sunt nulla voluptatum beatae laudantium officia. dolor sit amet consectetur adipisicing elit. Ipsa deleniti voluptas possimus vitae eos? Eveniet corrupti, ipsum dolor eius voluptas perferendis repudiandae maiores sit deleniti, sed similique vero quibusdam ab!{commit.content}</CardContent>
           </Card>
