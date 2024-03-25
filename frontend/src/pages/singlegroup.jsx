@@ -10,6 +10,8 @@ import { CardHeader, CardDescription, CardTitle, CardContent } from '../componen
 import useRefreshToken from "../hooks/refreshToken";
 import useAxios from '../utils/useAxios';
 
+
+
 const SingleGroup = () => {
     const params = useParams();
     const groupCode = params.id;
@@ -49,12 +51,13 @@ const SingleGroup = () => {
         <div className="flex flex-row">
         
         {/* left group */}
-        <div className="">
+        <div className="fixed">
         <GroupCode group={group} />
           <GroupMembers users={group.user} />
+          
         </div>
 
-        <div className="sticky top-0 h-screen w-[0.5px] bg-black mx-7"></div>
+        <div className="sticky top-0 h-screen w-[0.5px] bg-black mx-7 ml-[360px]"></div>
         {/* right group */}
         <div className="my-5 flex flex-col items-center">
              {group.commit?.map((commit) => (

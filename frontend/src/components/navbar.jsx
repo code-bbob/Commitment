@@ -21,9 +21,9 @@ const Navbar = () => {
   // In your render function, add a button to trigger the logout function
 
   return (
-    <nav className="bg-black py-5 px-4">
+    <nav className="bg-black py-5 px-4 sticky top-0">
       <div className="container mx-auto flex justify-between items-center">
-        <div className="text-white font-bold">Your Logo</div>
+        <div className="text-white font-bold">DearDiary</div>
         {/* { user?(
         <p className='text-white'>Welcome, {}! Lets rock it today!</p>
         ):
