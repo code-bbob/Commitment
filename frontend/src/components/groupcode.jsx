@@ -20,16 +20,18 @@ export function GroupCode( {group} ) {
 
     return (
       <Card className="mx-4 my-4 w-80 h-auto">
-        <CardHeader>
+        <CardHeader className="pb-3">
           <CardTitle>Group Code</CardTitle>
           <CardDescription>
             Invite your loved ones to join and make commitments together.
           </CardDescription>
         </CardHeader>
-        <CardContent className="grid gap-6">
+        <CardContent>
           <div className="flex items-center justify-between space-x-4">
-            <CardDescription>
+            <CardDescription >
+              <p className="font-bold">
               Copy the code below to invite them.
+              </p>
               <div className="flex items-center space-x-4 my-4">
                 {group?.code}
                 {copied ? <TiTick size = {25} className="ml-1 border border-black border-1 p-1"/> : <FaCopy size = {25} onClick={copyToClipboard} className="ml-1 rounded border border-black border-1 p-1" />}

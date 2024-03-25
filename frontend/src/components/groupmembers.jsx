@@ -26,6 +26,7 @@ import {
   PopoverTrigger,
 } from "./ui/popover"
 import { useNavigate } from "react-router-dom"
+import { ScrollArea } from "../components/ui/scroll-area"
 
 const GroupMembers = ({users}) => {
   const getInitials = (name) => {
@@ -39,7 +40,8 @@ const GroupMembers = ({users}) => {
   
   const navigate = useNavigate();
     return (
-      <Card className="mx-4 my-4 w-80 h-auto">
+      
+      <Card className="mx-4 my-4 w-80 h-auto ">
         <CardHeader>
           <CardTitle>Group Members</CardTitle>
           <CardDescription>
@@ -47,10 +49,11 @@ const GroupMembers = ({users}) => {
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-6">
+        <ScrollArea className="h-auto max-h-[200px] overflow-hidden rounded-md border p-4">
+
         {users?.map((user) => (
-          <div onClick = {()=>navigate(`/user/${user.uuid}`)} className="flex items-center justify-between space-x-4">
-            <div className="flex items-center space-x-4">
-              
+          <div onClick = {()=>navigate(`/user/${user.uuid}`)} className="flex items-center space-x-4 py-2 hover:bg-gray-300">
+
                 <>
                 <Avatar>
                 <AvatarImage src="/avatars/01.png" />
@@ -62,10 +65,11 @@ const GroupMembers = ({users}) => {
             </div>
             </>
               
-            </div>
-            </div>
+            </div>  
             )
             )}
+           
+            </ScrollArea>
         </CardContent>
       </Card>
     )
