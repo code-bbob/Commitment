@@ -5,6 +5,7 @@ import Navbar from '../components/navbar';
 import { Card } from '../components/ui/card';
 import { CardHeader, CardDescription, CardTitle, CardContent } from '../components/ui/card';
 import useAxios from '../utils/useAxios';
+import JoinGroup from '../components/joingroup';
 
 const Groups = () => {
   const [groups, setGroups] = useState([]);
@@ -28,6 +29,7 @@ const Groups = () => {
   return (
     <div>
         <Navbar/>
+        <JoinGroup/>
       {groups.length>0?groups.map((group) => (
         <div key={group?.id} onClick={() => navigate(`/group/${group?.code}`)}  >
           <Card className="mx-80 my-10 w-1/2">
