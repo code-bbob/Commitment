@@ -34,7 +34,7 @@ class CommitView(APIView):
     #     if search:
     #         queryset = Commit.objects.filter(user=user, title__icontains =search).order_by('date')
     #         if not queryset:
-    #             return Response({"msg":"No commit of the search found"})
+    #             return Response({"message":"No commit of the search found"})
             
     #         serializer = CommitSerializer(queryset, many=True)
     #         return Response(serializer.data)
@@ -46,7 +46,7 @@ class CommitView(APIView):
     #             serializer = CommitSerializer(queryset)
     #             return Response(serializer.data)
     #         else:
-    #             return Response({"msg": "You are not authorized to view this commit or the commit doesnt exist"})
+    #             return Response({"message": "You are not authorized to view this commit or the commit doesnt exist"})
     #     else:
     #         queryset = Commit.objects.filter(user=user).order_by('date')
     #         streakset = Commit.objects.filter(user=user).order_by('date').values('date').distinct()
@@ -61,7 +61,7 @@ class CommitView(APIView):
         if search:
             queryset = Commit.objects.filter(title__icontains =search, type = "Public").order_by('date')
             if not queryset:
-                return Response({"msg":"No commit of the search found"})
+                return Response({"message":"No commit of the search found"})
             serializer = CommitSerializer(queryset, many=True)
             return Response(serializer.data)
         elif uuid:
@@ -71,7 +71,7 @@ class CommitView(APIView):
                 serializer = CommitSerializer(queryset)
                 return Response(serializer.data)
             else:
-                return Response({"msg": "You are not authorized to view this commit or the commit doesnt exist"})
+                return Response({"message": "You are not authorized to view this commit or the commit doesnt exist"})
         else:
             queryset = Commit.objects.filter(type="Public").order_by('date')
             serializer = CommitSerializer(queryset, many=True)
@@ -89,7 +89,7 @@ class CommitView(APIView):
                 if data["group_code"]:
                     group = Group.objects.filter(user=user, code=data["group_code"]).first()
                     group.commit.add(commit_instance)#you need to pass an object instance here instead of the serialized data
-        return Response({"msg":serializer.data},status=status.HTTP_200_OK)
+        return Response({"message":serializer.data},status=status.HTTP_200_OK)
         
 class GroupView(APIView):
     permission_classes = [IsAuthenticated]
@@ -103,7 +103,7 @@ class GroupView(APIView):
                 serializer = GroupSerializer(group)
                 return Response(serializer.data)
             else:
-                return Response({"msg": "You are not in the group"})
+                return Response({"message": "You are not in the group"})
         elif search:
             queryset = Group.objects.filter(user=user, name__icontains = search)
             if queryset:
@@ -140,16 +140,20 @@ class GroupView(APIView):
 
     def join_group(self,request):
         data = request.data
+        print(data)
         user = request.user
         data.pop('action',None)
         join_code = data.pop('join_code',None)
-        group=Group.objects.get(code=join_code) 
-        print(group.user.all())
+        print(join_code)
+        group=Group.objects.filter(code=join_code).first() 
+        print(group)
+        if not group:
+            return Response({'message':"Group not found"},status=status.HTTP_400_BAD_REQUEST)
         if user in group.user.all():
-            return Response({'msg':"User already exists ini group"},status=status.HTTP_400_BAD_REQUEST)
+            return Response({'message':"User already exists in the group"},status=status.HTTP_400_BAD_REQUEST)
         else:
             group.user.add(user)
-        return Response({'msg':"User added succesfully"},status=status.HTTP_200_OK)
+        return Response({'message':"User added succesfully"},status=status.HTTP_200_OK)
 
 class DummyDataView(APIView):
     def get(self, request, *args, **kwargs):

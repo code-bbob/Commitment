@@ -64,10 +64,15 @@ const SingleGroup = () => {
               <div key={commit.id} className="w-auto max-w-[80%] my-4">
                 <Card onClick={() =>navigate(`/commit/${commit.code}`)}>
                   <CardHeader>
-                    <CardTitle>{commit.title}</CardTitle>
+                    <CardTitle>
+                      {commit.title}
+                      </CardTitle>
                     <div className="border-t border-black relative"></div>
                     <CardDescription>
+                      <div className="flex justify-between">
                       <a href={`/user/${commit.user?.uuid}`}>Author: {commit.user.name}</a>
+                      <p>Posted on: {commit?.date}</p>
+                      </div>
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
