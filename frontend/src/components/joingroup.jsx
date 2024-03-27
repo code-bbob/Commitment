@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import useAxios from '../utils/useAxios';
+import { Card, CardHeader, CardDescription, CardTitle, CardContent } from "../components/ui/card";
 
 const JoinGroup = () => {
     const api = useAxios();
@@ -22,8 +23,17 @@ const JoinGroup = () => {
     };
     
     return (
+        <Card className="w-[360px] h-[330px] m-10">
+            <CardHeader>
+                <CardTitle>
         <div className="flex flex-col items-center">
         <h1 className="text-3xl font-bold my-5">Join Group</h1>
+        </div>
+        </CardTitle>
+        <div className="border-t border-black mx-0"/>
+            </CardHeader>
+            <CardContent className="mt-4">
+
         <form onSubmit={handleJoinGroup} className="flex flex-col items-center">
             <input
             type="text"
@@ -34,14 +44,16 @@ const JoinGroup = () => {
             />
             <button
             type="submit"
-            className="bg-blue-500 text-white rounded-md p-2 w-80 my-2"
+            className="bg-black text-white rounded-md p-2 w-80 mt-4 my-2"
             >
             Join Group
             </button>
             {error && <p className="text-red-500 my-2">{error}</p>}
             {success && <p className="text-green-500 my-2">{success}</p>}
         </form>
-        </div>
+        
+            </CardContent>
+        </Card>
     );
 }
 export default JoinGroup;
