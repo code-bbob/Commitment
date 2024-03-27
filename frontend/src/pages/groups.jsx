@@ -6,6 +6,7 @@ import { Card } from '../components/ui/card';
 import { CardHeader, CardDescription, CardTitle, CardContent } from '../components/ui/card';
 import useAxios from '../utils/useAxios';
 import JoinGroup from '../components/joingroup';
+import CreateGroup from '../components/creategroup';
 
 const Groups = () => {
   const [groups, setGroups] = useState([]);
@@ -30,12 +31,13 @@ const Groups = () => {
     <div>
         <Navbar/>
         <JoinGroup/>
+        <CreateGroup/>
       {groups.length>0?groups.map((group) => (
         <div key={group?.id} onClick={() => navigate(`/group/${group?.code}`)}  >
           <Card className="mx-80 my-10 w-1/2">
             <CardHeader>
             <CardTitle>{group?.name}</CardTitle>
-            <div className="border-t border-black mx-0"></div>
+            <div className="border-t border-black mx-0"/>
             </CardHeader>
           </Card>
         </div>
