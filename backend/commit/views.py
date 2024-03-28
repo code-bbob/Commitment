@@ -91,7 +91,7 @@ class CommitView(APIView):
                     group.commit.add(commit_instance)#you need to pass an object instance here instead of the serialized data
         return Response({"message":serializer.data},status=status.HTTP_200_OK)
         
-class GroupView(APIView):
+class GroupView(APIView):   #use listapivievv
     permission_classes = [IsAuthenticated]
     def get(self,request, *args, **kwargs):
         user = request.user
@@ -155,11 +155,25 @@ class GroupView(APIView):
             group.user.add(user)
         return Response({'message':"User added succesfully"},status=status.HTTP_200_OK)
 
-class DummyDataView(APIView):
-    def get(self, request, *args, **kwargs):
-        return Response({'name':"Bibhab"})
-    
-    def post(self,request, *args, **kwargs):
-        data = request.data
-        return Response(data)
+class DummyDataView(generics.ListAPIView):
+    pass
+    # permission_classes = [IsAuthenticated]
+    # queryset = Group.objects.all()
+    # serializer_class = GroupSerializer
+
+
+
+    # def get(self, request, *args, **kwargs):
+    #     user = request.user
+    #     queryset = Group.objects.filter(user=user)
+    #     if queryset:
+    #         serializer = GroupSerializer(queryset, many=True)
+    #         return Response(serializer.data)
+    #     else:
+    #         return Response({'error': "No matching group found for the user"}, status=status.HTTP_200_OK)
         
+    
+    # def post(self,request, *args, **kwargs):
+    #     data = request.data
+    #     return Response(data)
+    # generics.listapiview gives the full url of the image
