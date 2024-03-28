@@ -39,6 +39,6 @@ class Group(models.Model):
     user = models.ManyToManyField(User)
     code = models.UUIDField(default=uuid.uuid4)
     commit = models.ManyToManyField(Commit)
-    
+    dp = models.ImageField(upload_to='commit/groups/images', default='')
     def __str__(self):
         return self.name    
