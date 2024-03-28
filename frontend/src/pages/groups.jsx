@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/navbar';
 import { Card } from '../components/ui/card';
-import { CardHeader, CardDescription, CardTitle, CardContent } from '../components/ui/card';
+import { CardHeader, CardDescription, CardTitle, CardContent, CardFooter } from '../components/ui/card';
 import useAxios from '../utils/useAxios';
 import JoinGroup from '../components/joingroup';
 import CreateGroup from '../components/creategroup';
@@ -33,20 +33,30 @@ const Groups = () => {
         <JoinGroup/>
         <CreateGroup/>
       {groups.length>0?groups.map((group) => (
-        <div key={group?.id} onClick={() => navigate(`/group/${group?.code}`)}  >
-          <Card className="relative z-[-1] mx-80 my-10 w-1/3 h-60">
-            <CardHeader>
-            <CardTitle className="mb-4">{group?.name}</CardTitle>
+        <div className='' key={group?.id} onClick={() => navigate(`/group/${group?.code}`)}  >
+          <Card className="mx-80 my-10 w-1/3 h-72 hover:bg-gray-300">
+            <CardHeader className="pb-4">
+            <CardTitle className="mb-4 font-serif text-2xl">{group?.name}</CardTitle>
             <img
             src={`http://127.0.0.1:8000/${group?.dp}`}
             alt=""
-            className="absolute object-cover h-24 w-24 rounded-full ml-[290px]"
+            className="absolute object-cover h-36 w-36 rounded-full ml-[245px]"
           />
             <div className="border-t-2 border-black mx-0"/>
             </CardHeader>
-            <CardContent>
-              Group description bla bla bla bla bla bla bla blaaaaa Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque voluptates commodi quo, ut ea accusantium maiores laboriosam, 
+            <CardContent className="pb-4 h-24 w-72">
+              <CardDescription>
+              Group description bla bla bla bla bla bla bla blaaaaa
+              </CardDescription>
             </CardContent>
+            <CardFooter className="flex justify-between pb-4">
+              <p className="italic"> Members Joined: 10</p>
+              <div>
+
+              <p className="font-bold text-5xl"> {group?.streak}</p>
+              days streak
+              </div>
+            </CardFooter>
           </Card>
         </div>
       )):<h1>No groups</h1>}
