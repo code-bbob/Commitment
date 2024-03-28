@@ -26,7 +26,7 @@ const CreateGroup = () => {
       setSuccess(response.data.message);
     } catch (error) {
       console.log(error);
-      setError(error);
+      setError(error.response.data.message);
     }
   };
   return (
