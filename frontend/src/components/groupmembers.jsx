@@ -28,7 +28,7 @@ import {
 import { useNavigate } from "react-router-dom"
 import { ScrollArea } from "../components/ui/scroll-area"
 
-const GroupMembers = ({users}) => {
+const GroupMembers = ({members}) => {
   const getInitials = (name) => {
     const initials = name.split(' ')
       .map(word => word.charAt(0))
@@ -51,7 +51,7 @@ const GroupMembers = ({users}) => {
         <CardContent className="grid gap-6">
         <ScrollArea className="h-auto max-h-[200px] overflow-hidden rounded-md border p-4">
 
-        {users?.map((user) => (
+        {members?.map((user) => (
           <div onClick = {()=>navigate(`/user/${user.uuid}`)} className="flex items-center space-x-4 py-2 hover:bg-gray-300">
 
                 <>

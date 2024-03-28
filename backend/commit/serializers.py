@@ -10,7 +10,7 @@ class CommitSerializer(serializers.ModelSerializer):
         fields = ['user','type','title','content','date','code']
 
 class GroupSerializer(serializers.ModelSerializer):
-    user = UserInfoSerializer(read_only=True,many=True)#the serializer normally expects a single instance and without many=true it is gonna suppose the data is a single instance and look for email field but since it is a list it is not gonna find it normally resulting in an attribute error.  
+    members = UserInfoSerializer(read_only=True,many=True)#the serializer normally expects a single instance and without many=true it is gonna suppose the data is a single instance and look for email field but since it is a list it is not gonna find it normally resulting in an attribute error.  
     commit = CommitSerializer(read_only=True,many=True)
     streak = serializers.SerializerMethodField()
     members_no = serializers.SerializerMethodField()
@@ -20,8 +20,8 @@ class GroupSerializer(serializers.ModelSerializer):
     def get_streak(self, obj):
         group = obj
         userstreaks=[]
-        for user in group.user.all():
-            streakset = Commit.objects.filter(user=user,type="Group").order_by('date').values('date').distinct()
+        for member in group.members.all():
+            streakset = Commit.objects.filter(user=member,type="Group").order_by('date').values('date').distinct()
             userstreaks.append(calculate_streak(streakset))
         streak = min(userstreaks)
         return streak
@@ -29,6 +29,6 @@ class GroupSerializer(serializers.ModelSerializer):
     def get_members_no(self, obj):
         no = 0
         group = obj
-        for user in group.user.all():
+        for user in group.members.all():
             no += 1
         return no

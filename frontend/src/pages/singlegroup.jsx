@@ -53,7 +53,7 @@ const SingleGroup = () => {
         {/* left group */}
         <div className="fixed">
         <GroupCode group={group} />
-          <GroupMembers users={group.user} />
+          <GroupMembers members={group.members} />
           
         </div>
 

@@ -98,21 +98,21 @@ class GroupView(APIView):   #use listapivievv
         uuid= self.kwargs.get('uuid')
         search = request.query_params.get('search')
         if uuid:
-            group = Group.objects.filter(user=user, code = uuid).first()
+            group = Group.objects.filter(members=user, code = uuid).first()
             if group:
                 serializer = GroupSerializer(group)
                 return Response(serializer.data)
             else:
                 return Response({"message": "You are not in the group"})
         elif search:
-            queryset = Group.objects.filter(user=user, name__icontains = search)
+            queryset = Group.objects.filter(members=user, name__icontains = search)
             if queryset:
                 serializer = GroupSerializer(queryset, many = True)
                 return Response(serializer.data)
             else:
                 return Response({'error': "No matching group found from the search"}, status=status.HTTP_404_NOT_FOUND)  
         else:
-            queryset = Group.objects.filter(user=user)
+            queryset = Group.objects.filter(members=user)
             if queryset:
                 serializer = GroupSerializer(queryset, many=True)
                 return Response(serializer.data)
