@@ -21,7 +21,7 @@ export function GroupCode( {group} ) {
     return (
       <Card className="mx-4 my-4 w-80 h-auto">
         <CardHeader className="pb-3">
-          <CardTitle>Group Code</CardTitle>
+          <CardTitle className="text-2xl font-bold">{group?.name}</CardTitle>
           <CardDescription>
             Invite your loved ones to join and make commitments together.
           </CardDescription>

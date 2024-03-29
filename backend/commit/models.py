@@ -36,7 +36,7 @@ class Commit(models.Model):
 
 class Group(models.Model):
     name= models.CharField(max_length=30)
-    user = models.ManyToManyField(User)
+    members = models.ManyToManyField(User)
     code = models.UUIDField(default=uuid.uuid4)
     commit = models.ManyToManyField(Commit)
     dp = models.ImageField(upload_to='commit/groups/images', default='')
