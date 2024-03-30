@@ -32,21 +32,22 @@ const Groups = () => {
         <Navbar/>
         <JoinGroup/>
         <CreateGroup/>
+        <div className="flex flex-wrap">
       {groups.length>0?groups.map((group) => (
-        <div className='' key={group?.id} onClick={() => navigate(`/group/${group?.code}`)}  >
-          <Card className="mx-80 my-10 w-1/3 h-72 hover:bg-gray-300">
-            <CardHeader className="pb-4">
-            <CardTitle className="mb-4 font-serif text-2xl">{group?.name}</CardTitle>
+        <div className='m-8 w-[350px]' key={group?.id} onClick={() => navigate(`/group/${group?.code}`)}  >
+          <Card className="h-72 hover:bg-gray-300">
+            <CardHeader className="pb-4 mb-4 bg-black rounded-xl">
+            <CardTitle className="mb-4 font-serif text-2xl text-white">{group?.name}</CardTitle>
             <img
             src={`http://127.0.0.1:8000/${group?.dp}`}
             alt=""
-            className="absolute object-cover h-36 w-36 rounded-full ml-[245px]"
+            className="absolute object-cover h-36 w-36 rounded-full ml-[180px]"
           />
-            <div className="border-t-2 border-black mx-0"/>
+            <div className="border-t-2 border-white mx-0"/>
             </CardHeader>
-            <CardContent className="pb-4 h-24 w-72">
+            <CardContent className="pb-4 h-24 w-[230px]">
               <CardDescription>
-              Group description bla bla bla bla bla bla bla blaaaaa
+              Group description bibhab bi
               </CardDescription>
             </CardContent>
             <CardFooter className="flex justify-between pb-4">
@@ -60,6 +61,7 @@ const Groups = () => {
           </Card>
         </div>
       )):<h1>No groups</h1>}
+    </div>
     </div>
   );
 };
