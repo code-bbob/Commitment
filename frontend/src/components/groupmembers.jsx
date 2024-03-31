@@ -35,6 +35,7 @@ const GroupMembers = ({members}) => {
       .join('');
     return initials.toUpperCase();
   }
+  console.log(members);
 
 
   
@@ -56,7 +57,7 @@ const GroupMembers = ({members}) => {
 
                 <>
                 <Avatar>
-                <AvatarImage src="/avatars/01.png" />
+                <AvatarImage src={`http://127.0.0.1:8000/${user?.dp}`} />
                 <AvatarFallback>{getInitials(user?.name)}</AvatarFallback>
               </Avatar>
               <div>
