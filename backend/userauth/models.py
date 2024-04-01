@@ -44,7 +44,8 @@ class User(AbstractBaseUser,PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
-    dp = models.ImageField(upload_to='user/images', default='')
+    dp = models.ImageField(upload_to='user/images', default='', null=True)
+    bio = models.CharField(max_length=100, default='', null=True)
 
       # Include groups if needed
     groups = models.ManyToManyField(
