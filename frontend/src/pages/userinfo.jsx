@@ -4,6 +4,8 @@ import axios from "axios";
 import useAxios from '../utils/useAxios';
 import Navbar from "../components/navbar";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "../components/ui/card";
+import UserProfile from "../components/userprofile";
+import EditUser from "../components/edituser";
 
 const UserInfo = () => {
     const params = useParams();
@@ -31,6 +33,8 @@ const UserInfo = () => {
     return(
         <>
         <Navbar />
+        <UserProfile user = {user}/>
+        <EditUser/>
         <div>HI {user?.userinfo?.name}</div>
         <div className="my-5 flex flex-col items-center">
         {user?.commits?.map((commit) => (

@@ -109,7 +109,7 @@ class UserInfoSerializer(serializers.ModelSerializer):
   streak = serializers.SerializerMethodField()
   class Meta:
     model = User
-    fields = ['name','email','uuid','streak','dp']
+    fields = ['name','email','uuid','streak','dp','bio']
 
   def get_streak(self, obj):
     user = obj

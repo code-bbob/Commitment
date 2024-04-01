@@ -136,6 +136,22 @@ class UserInfoView(APIView):
       return Response({"userinfo":userinfo,"commits" : commits}, status=status.HTTP_200_OK)
 
   
+  def patch(self,request):
+    user = request.user
+    new_bio = request.data.get("bio")
+    serializer = UserInfoSerializer
+    if new_bio:
+      user.bio = new_bio
+      user.save()
+      return Response({"msg":"Bio Updated"}, status=status.HTTP_200_OK)
+    else:
+      return Response("msg: Something went wrong!", status=status.HTTP_400_BAD_REQUEST)
+    
+
+
+
+
+
   # def patch(self,request):
   #   user = request.user
   #   serializer = UserInfoSerializer(user)
