@@ -7,6 +7,18 @@ import { CardHeader, CardDescription, CardTitle, CardContent, CardFooter } from 
 import useAxios from '../utils/useAxios';
 import JoinGroup from '../components/joingroup';
 import CreateGroup from '../components/creategroup';
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "../components/ui/drawer"
+import { Button } from '../components/ui/button';
+
 
 const Groups = () => {
   const [groups, setGroups] = useState([]);
@@ -30,8 +42,29 @@ const Groups = () => {
   return (
     <div>
         <Navbar/>
-        <JoinGroup/>
-        <CreateGroup/>
+  
+        <Drawer>
+  <DrawerTrigger>Click to join group.</DrawerTrigger>
+  <DrawerContent>
+    <JoinGroup/>
+    <DrawerFooter>
+      <DrawerClose>
+        <Button variant="outline">Cancel</Button>
+      </DrawerClose>
+    </DrawerFooter>
+  </DrawerContent>
+</Drawer>
+<Drawer>
+  <DrawerTrigger>Click to create group.</DrawerTrigger>
+  <DrawerContent>
+      <CreateGroup/>
+    <DrawerFooter>
+      <DrawerClose>
+        <Button variant="outline">Cancel</Button>
+      </DrawerClose>
+    </DrawerFooter>
+  </DrawerContent>
+</Drawer>
         <div className="flex flex-wrap">
       {groups.length>0?groups.map((group) => (
         <div className='m-8 w-[350px]' key={group?.id} onClick={() => navigate(`/group/${group?.code}`)}  >
