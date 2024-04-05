@@ -90,7 +90,21 @@ class CommitView(APIView):
                     group = Group.objects.filter(user=user, code=data["group_code"]).first()
                     group.commit.add(commit_instance)#you need to pass an object instance here instead of the serialized data
         return Response({"message":serializer.data},status=status.HTTP_200_OK)
-        
+
+    def patch(self,request):
+        user = request.user
+        commit_code = request.data.get('commit_code', None)
+        commit = Commit.objects.get(code = commit_code)
+        if commit:
+            if commit.likes.filter(id=user.id).exists():  # Check if user is in likes
+                commit.likes.remove(user)
+                return Response({"message": "Unliked successfully"}, status=status.HTTP_200_OK)
+            else:
+                commit.likes.add(user)
+                return Response({"message": "Liked successfully"}, status=status.HTTP_200_OK)
+        else:
+            return Response({"message": "Commit not found"}, status=status.HTTP_404_NOT_FOUND)
+
 class GroupView(APIView):   #use listapivievv
     permission_classes = [IsAuthenticated]
     def get(self,request, *args, **kwargs):
