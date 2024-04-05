@@ -6,6 +6,7 @@ import { CardHeader, CardDescription, CardTitle, CardContent } from '../componen
 import Groups from "../components/groups";
 import { useNavigate } from 'react-router-dom';
 import useAxios from '../utils/useAxios';
+import { Button } from '../components/ui/button';
 
 const Commits = () => {
   const navigate = useNavigate();
@@ -13,12 +14,24 @@ const Commits = () => {
   const accessToken = localStorage.getItem('accessToken');
   const api = useAxios();
 
+  const handlelike = async (e,commit) =>{
+    e.preventDefault();
+    e.stopPropagation();
+    const response=await api.patch('/api/commit/', { commit_code: commit?.code }).then(response => {
+      console.log(response.data);
+  }).catch(error => {
+      console.error('Error updating bio:', error);
+  });
+    console.log('like clicked £££££££££££££££££££££££££££')
+  }
+
 
   useEffect(() => {
     const fetchCommits = async () => {
       try {
         const token = localStorage.getItem('token');
         const response = await api.get('api/commit/');
+        console.log(response.data);
         setCommits(response.data);
       } catch (error) {
         console.error(error);
@@ -49,10 +62,13 @@ const Commits = () => {
             <CardTitle>{commit.title}</CardTitle>
             <div className="border-t border-black"></div>
             <CardDescription>
-              <a href={`/user/${commit.user?.uuid}`}>Author: {commit.user.name}</a>
+              <a href={`/user/${commit.user?.uuid}`}>Author: {commit.user.name} </a>
+              Likes:{commit?.likes.length}
+              <Button onClick={(e) => handlelike(e, commit)}>Click me</Button>
             </CardDescription>
             </CardHeader>
-            <CardContent>Lorem Lorem Lorem ipsum Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi, rerum neque repellat sit esse voluptate quis adipisci accusantium! Sit culpa odit, incidunt eaque delectus nobis omnis quibusdam dignissimos provident aliquam! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam illum inventore voluptatum tenetur officiis, ipsam nam doloremque itaque aliquid, eligendi, alias repellat amet ex. Sunt nulla voluptatum beatae laudantium officia. dolor sit amet consectetur adipisicing elit. Ipsa deleniti voluptas possimus vitae eos? Eveniet corrupti, ipsum dolor eius voluptas perferendis repudiandae maiores sit deleniti, sed similique vero quibusdam ab!{commit.content}</CardContent>
+            <CardContent>
+              Lorem Lorem Lorem ipsum Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi, rerum neque repellat sit esse voluptate quis adipisci accusantium! Sit culpa odit, incidunt eaque delectus nobis omnis quibusdam dignissimos provident aliquam! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam illum inventore voluptatum tenetur officiis, ipsam nam doloremque itaque aliquid, eligendi, alias repellat amet ex. Sunt nulla voluptatum beatae laudantium officia. dolor sit amet consectetur adipisicing elit. Ipsa deleniti voluptas possimus vitae eos? Eveniet corrupti, ipsum dolor eius voluptas perferendis repudiandae maiores sit deleniti, sed similique vero quibusdam ab!{commit.content}</CardContent>
           </Card>
         </div>
       ))}

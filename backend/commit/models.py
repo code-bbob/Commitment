@@ -20,6 +20,7 @@ class Commit(models.Model):
     content = models.TextField()
     code = models.UUIDField(default=uuid.uuid4)
     date = models.DateField(default=datetime.date.today)
+    likes = models.ManyToManyField(User, related_name='commit_likes', blank=True)
 
     def __str__(self):
         return f"{self.title} at {self.date}"
