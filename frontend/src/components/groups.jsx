@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
-import { Card, CardHeader, CardDescription, CardTitle, CardContent } from '../components/ui/card';
+import { Card, CardHeader, CardDescription, CardTitle, CardContent,CardFooter } from '../components/ui/card';
 import useAxios from '../utils/useAxios';
-
+import { ScrollArea } from "./ui/scroll-area"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../components/ui/tooltip"
 
 const Groups = () => {
   const navigate = useNavigate();
@@ -33,28 +39,30 @@ const Groups = () => {
 
   return (
     <>
-    <h1 className="text-3xl font-bold mx-10 my-8">Groups</h1>
-    {
-      groups.length>0?groups?.map((group) => (
-        < Card className = "w-40 m-10" onClick={() => navigate(`/group/${group?.code}`)} key={group?.id}>
-        <CardHeader >
-        {group?.name}
-        </CardHeader>
-        </Card>
-        )):<h1 className="text-3xl font-bold mx-10 my-8">No Groups</h1>
-    }
+    <ScrollArea className="h-[90vh]">
+    <h1 className="text-l font-bold mx-4 my-4 text-white">Groups</h1>
+      {groups.length>0?groups.map((group) => (
+        <TooltipProvider delayDuration={100}>
+          <div>
+        <Tooltip className="transition delay-3000">
+          <TooltipTrigger><div className='w-24 transform transition-transform hover:scale-110 ' key={group?.id} onClick={() => navigate(`/group/${group?.code}`)}  >
+            <img
+            src={`http://127.0.0.1:8000/${group?.dp}`}
+            alt=""
+            className="h-16 w-16 rounded-full mx-4 my-2"
+          />
+        </div>
+     </TooltipTrigger>
+          <TooltipContent>
+            <p>{group?.name}</p>
+          </TooltipContent>
+        </Tooltip>
+        </div>
+      </TooltipProvider>
+         )):<h1>No groups</h1>}
+      </ScrollArea>
     </>
-    // <div className="container mx-auto">
-    //     <h1 className="text-3xl font-bold my-8">Groups</h1>
-        
-            // {groups?.map((group) => (
-            //     <div onClick={() => navigate(`/group/${group?.code}`)} key={group?.id} className="bg-white p-4 rounded-lg shadow-lg">
-            //         <h2 className="text-xl font-bold">{group?.name}</h2>
-            //         <p>{group.description}</p>
-            //     </div>
-            // ))}
-      
-    // </div>
-  );
+
+  )
             };
 export default Groups
