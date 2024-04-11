@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import useAxios from '../utils/useAxios';
 import { Button } from '../components/ui/button';
 import { FaHeart } from "react-icons/fa";
+import { GiNotebook } from "react-icons/gi";
 
 const Commits = () => {
   const navigate = useNavigate();
@@ -49,27 +50,27 @@ const Commits = () => {
   }
 };
 
-  
   return (
-    <div>
+    <div className='bg-gradient-to-r from-rose-500 to-teal-200'>
         <Navbar/>
         <div className="flex flex-row ">
         
-        {/* left group */}
+         {/* left group */}
         <div className='bg-black fixed h-screen'>
         <Groups/>
         </div>
         {/* line */}
-        <div className="sticky top-0 h-screen w-[0.5px] bg-black mx-0"></div>
+        <div className="sticky top-0 h-screen w-[0.5px] bg-white ml-24"></div> 
 
-      <div className="my-5 ml-24 flex flex-col items-center">
+      <div className="my-5 ml-24 flex flex-col items-center ">
+      <GiNotebook size={32} className='hover:text-slate-500 hover:scale-125' onClick={()=>navigate("post/")} />
       {commits.map((commit) => (
         <div key={commit.id} className="w-auto max-w-[80%] my-4">
-          <Card onClick={() =>navigate(`/commit/${commit.code}`)}>
+          <Card className=" bg-black text-white" onClick={() =>navigate(`/commit/${commit.code}`)}>
             <CardHeader>
             <CardTitle>{commit.title}</CardTitle>
-            <div className="border-t border-black"></div>
-            <CardDescription>
+            <div className="border-t border-white"></div>
+            <CardDescription className="text-">
                       <p>Posted on: {commit?.date}</p>
                     </CardDescription>
             </CardHeader>
@@ -79,7 +80,7 @@ const Commits = () => {
               <CardFooter><p className='text-xl font-bold mt-8'>{commit?.likes.length}</p>
              
               <FaHeart className='text-red-600 size-4 mt-8 mx-1 hover:scale-125 hover:text-red-800' onClick={(e) => handleLike(e, commit)}/>
-              <a href={`/user/${commit.user?.uuid}`} className='font-serif font-medium italic ml-[700px]'>- {commit.user.name}</a>
+              <a href={`/user/${commit.user?.uuid}`} className='font-serif font-medium italic ml-[600px]'>- {commit.user.name}</a>
               </CardFooter>
           </Card>
         </div>

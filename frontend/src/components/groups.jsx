@@ -39,11 +39,11 @@ const Groups = () => {
 
   return (
     <>
-    <ScrollArea className="h-[90vh]">
+    <ScrollArea className="h-[90vh] ">
     <h1 className="text-l font-bold mx-4 my-4 text-white">Groups</h1>
       {groups.length>0?groups.map((group) => (
         <TooltipProvider delayDuration={100}>
-          <div>
+          <div className='hover:bg-gray-500'>
         <Tooltip className="transition delay-3000">
           <TooltipTrigger><div className='w-24 transform transition-transform hover:scale-110 ' key={group?.id} onClick={() => navigate(`/group/${group?.code}`)}  >
             <img

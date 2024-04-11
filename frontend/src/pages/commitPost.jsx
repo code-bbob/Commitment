@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import useAxios from '../utils/useAxios';
+import { Card, CardContent, CardHeader,CardFooter,CardTitle,CardDescription} from '../components/ui/card';
+import Navbar from '../components/navbar';
 
 const CommitForm = () => {
 
-    const accessToken = localStorage.getItem('accessToken');
-    console.log("index", accessToken);
-    const refreshToken = localStorage.getItem('refreshToken');
+    const api = useAxios();
     
   const [formData, setFormData] = useState({
     title: '',
@@ -20,11 +21,7 @@ const CommitForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/commit/', formData,{
-        headers: {
-            Authorization: `Bearer ${accessToken}`
-        }
-    });
+      const response = await api.post('api/commit/', formData);
       console.log(response.data); // handle the response as needed
     } catch (error) {
       console.error(error);
@@ -32,36 +29,51 @@ const CommitForm = () => {
   };
 
   return (
+    <div className='bg-gradient-to-r from-rose-500 to-teal-200 h-screen'>
+      <Navbar />
     <form onSubmit={handleSubmit}>
-      <label htmlFor="title">Title:</label>
+      <Card className=" bg-black text-white mx-80 my-10 w-1/2 h-[60vh]">
+            <CardHeader>
+            <CardTitle><label htmlFor="title">Title:</label>
       <input
+      className='bg-black'
         type="text"
         id="title"
         name="title"
         value={formData.title}
         onChange={handleChange}
-      />
-
-      <label htmlFor="content">Content:</label>
+      /></CardTitle>
+            <div className="border-t border-white"></div>
+            <CardDescription className="text-white">
+            <label htmlFor="type">Type:</label>
       <input
-        type="text"
-        id="content"
-        name="content"
-        value={formData.field1}
-        onChange={handleChange}
-      />
-
-      <label htmlFor="type">Type:</label>
-      <input
+      className='bg-black'
         type="text"
         id="type"
         name="type"
         value={formData.field2}
         onChange={handleChange}
       />
+                    </CardDescription>
+            </CardHeader>
+            <CardContent>
+            <label htmlFor="content">Content:</label>
+      <input
+      className='bg-black'
+        type="text"
+        id="content"
+        name="content"
+        value={formData.field1}
+        onChange={handleChange}
+      />
+              </CardContent>
+              <CardFooter>
+              <button className='border-white border px-3' type="submit">Submit</button>
+              </CardFooter>
+          </Card>
 
-      <button type="submit">Submit</button>
     </form>
+    </div>
   );
 };
 

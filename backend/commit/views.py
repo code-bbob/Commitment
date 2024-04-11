@@ -98,10 +98,12 @@ class CommitView(APIView):
         if commit:
             if commit.likes.filter(id=user.id).exists():  # Check if user is in likes
                 commit.likes.remove(user)
-                return Response({"message": "Unliked successfully"}, status=status.HTTP_200_OK)
+                serializer = CommitSerializer(commit)
+                return Response(serializer.data, status=status.HTTP_200_OK)
             else:
                 commit.likes.add(user)
-                return Response({"message": "Liked successfully"}, status=status.HTTP_200_OK)
+                serializer = CommitSerializer(commit)
+                return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response({"message": "Commit not found"}, status=status.HTTP_404_NOT_FOUND)
 

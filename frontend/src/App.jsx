@@ -35,7 +35,7 @@ function App() {
     <Route path="/signup" element={<UserAuthForm/>}/>
     <Route path='/register' element={<UserRegister/>}/>
 
-    <Route path="/commit/post/" element={<CommitForm/>}/>
+    <Route path="/commits/post/" element={<CommitForm/>}/>
     
       </Routes>
   )
