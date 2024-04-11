@@ -40,9 +40,8 @@ const Groups = () => {
   }, []);
 
   return (
-    <div>
+    <div className='bg-gradient-to-r from-rose-500 to-teal-200'>
         <Navbar/>
-  
         <Drawer>
   <DrawerTrigger>Click to join group.</DrawerTrigger>
   <DrawerContent>
