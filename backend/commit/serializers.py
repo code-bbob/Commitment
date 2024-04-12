@@ -6,9 +6,15 @@ from .utils import calculate_streak
 class CommitSerializer(serializers.ModelSerializer):
     user = UserInfoSerializer(read_only=True)
     likes = UserInfoSerializer(read_only=True,many=True)
+    has_liked = serializers.SerializerMethodField()
     class Meta:
         model = Commit
-        fields = ['user','type','title','content','date','code','likes']
+        fields = ['user','type','title','content','date','code','likes','has_liked']
+    def get_has_liked(self, obj):
+        user = self.context.get('user')
+        if user in obj.likes.all():
+            return True
+        return False
 
 class GroupSerializer(serializers.ModelSerializer):
     members = UserInfoSerializer(read_only=True,many=True)#the serializer normally expects a single instance and without many=true it is gonna suppose the data is a single instance and look for email field but since it is a list it is not gonna find it normally resulting in an attribute error.  
