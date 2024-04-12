@@ -3,6 +3,7 @@ import axios from 'axios';
 import useAxios from '../utils/useAxios';
 import { Card, CardContent, CardHeader,CardFooter,CardTitle,CardDescription} from '../components/ui/card';
 import Navbar from '../components/navbar';
+import Bibhab from './test';
 
 const CommitForm = () => {
 
@@ -31,6 +32,7 @@ const CommitForm = () => {
   return (
     <div className='bg-gradient-to-r from-rose-500 to-teal-200 h-screen'>
       <Navbar />
+      <Bibhab />
     <form onSubmit={handleSubmit}>
       <Card className=" bg-black text-white mx-80 my-10 w-1/2 h-[60vh]">
             <CardHeader>
